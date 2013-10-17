@@ -16,6 +16,7 @@
 		A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */; };
 		A046F273180FCFA5004F0471 /* JRFComment.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F272180FCFA5004F0471 /* JRFComment.m */; };
 		A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */; };
+		A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F27C180FE221004F0471 /* JRFCommentCell.m */; };
 		A0B441711808DB3F00529C07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441701808DB3F00529C07 /* Foundation.framework */; };
 		A0B441731808DB3F00529C07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441721808DB3F00529C07 /* CoreGraphics.framework */; };
 		A0B441751808DB3F00529C07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441741808DB3F00529C07 /* UIKit.framework */; };
@@ -64,6 +65,8 @@
 		A046F272180FCFA5004F0471 /* JRFComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFComment.m; sourceTree = "<group>"; };
 		A046F274180FD01D004F0471 /* NSDictionary+NilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NilSafe.h"; sourceTree = "<group>"; };
 		A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NilSafe.m"; sourceTree = "<group>"; };
+		A046F27B180FE221004F0471 /* JRFCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFCommentCell.h; sourceTree = "<group>"; };
+		A046F27C180FE221004F0471 /* JRFCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFCommentCell.m; sourceTree = "<group>"; };
 		A0B4416D1808DB3F00529C07 /* JFHN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFHN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B441701808DB3F00529C07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A0B441721808DB3F00529C07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,6 +170,8 @@
 				A0B441AC1808E09F00529C07 /* JRFStory.m */,
 				A046F271180FCFA5004F0471 /* JRFComment.h */,
 				A046F272180FCFA5004F0471 /* JRFComment.m */,
+				A046F27B180FE221004F0471 /* JRFCommentCell.h */,
+				A046F27C180FE221004F0471 /* JRFCommentCell.m */,
 				A0B441AE1808E81800529C07 /* JRFStoryCell.h */,
 				A0B441AF1808E81800529C07 /* JRFStoryCell.m */,
 				A0B441B11808E82600529C07 /* JRFStoryCell.xib */,
@@ -370,6 +375,7 @@
 				A0B4417D1808DB3F00529C07 /* main.m in Sources */,
 				A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */,
 				A0B441AA1808DF9A00529C07 /* JRFStoryStore.m in Sources */,
+				A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */,
 				A0077AB0180CDF75003A5FFF /* UIColor+HN.m in Sources */,
 				A0077AB3180CDFBB003A5FFF /* UIFont+HN.m in Sources */,
 				A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */,

@@ -10,10 +10,14 @@
 #import "JRFStoryStore.h"
 #import "JRFStory.h"
 #import "JRFComment.h"
+#import "JRFCommentCell.h"
 
 static NSString *commentCellReuseIdentifier = @"JRFCommentCell";
+static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
 
-@interface JRFCommentViewController ()
+@interface JRFCommentViewController () {
+    JRFCommentCell *sizingCell;
+}
 @property(nonatomic) JRFStory *story;
 @end
 
@@ -33,7 +37,9 @@ static NSString *commentCellReuseIdentifier = @"JRFCommentCell";
     [super viewDidLoad];
     UIView *commentView = [[UIToolbar alloc] init];
     self.tableView.backgroundView = commentView;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:commentCellReuseIdentifier];
+    [self.tableView registerClass:[JRFCommentCell class] forCellReuseIdentifier:commentCellReuseIdentifier];
+    [self.tableView registerClass:[JRFCommentCell class] forCellReuseIdentifier:sizingCommentCellReuseIdentifier];
+    sizingCell = [self.tableView dequeueReusableCellWithIdentifier:sizingCommentCellReuseIdentifier];
     if (self.entryId) {
         [[JRFStoryStore sharedInstance] fetchDetailsForStoryId:self.entryId withCompletion:^(JRFStory *story, NSError *error) {
             if (error) {
@@ -68,15 +74,21 @@ static NSString *commentCellReuseIdentifier = @"JRFCommentCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:commentCellReuseIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = comment.text;
-    cell.detailTextLabel.text = comment.authorName;
+    JRFCommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:commentCellReuseIdentifier forIndexPath:indexPath];
+    cell.authorLabel.text = comment.authorName;
+    cell.commentLabel.text = comment.text;
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
     return comment.depth;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    JRFComment *comment = [self.story commentAtIndex:indexPath.row];
+    NSInteger indentation = [self tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
+    return [sizingCell heightForComment:comment indentationLevel:indentation];
 }
 
 @end
