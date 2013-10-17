@@ -24,13 +24,13 @@ PODS:
     - BDDROneFingerZoomGestureRecognizer (~> 1.0)
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
-  - SVPullToRefresh (0.4.1)
+  - Reveal-iOS-SDK (1.0.0)
   - TMCache (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - BDDRScrollViewAdditions (~> 1.1)
-  - SVPullToRefresh (~> 0.4)
+  - Reveal-iOS-SDK
   - TMCache (~> 1.2)
 
 SPEC CHECKSUMS:
@@ -38,7 +38,7 @@ SPEC CHECKSUMS:
   BDDROneFingerZoomGestureRecognizer: f9233809a97b836486615fa23ca4ba4e4300d0a5
   BDDRScrollViewAdditions: 74642c9ecb1af9add1c8156ed9d202c10584be97
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
-  SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
+  Reveal-iOS-SDK: 5d9715f81487585744d70eba7d81b345b8093e28
   TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27
 
 COCOAPODS: 0.26.2

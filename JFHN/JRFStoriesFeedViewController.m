@@ -10,6 +10,7 @@
 #import "JRFHNBrowserController.h"
 #import "JRFStoryStore.h"
 #import "JRFStory.h"
+#import "NSDate+Utility.h"
 
 static NSString *cellReuseIdentifier = @"JRFStoryCell";
 static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
@@ -17,7 +18,6 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 @interface JRFStoriesFeedViewController() {
     JRFStoryCell *sizingCell;
 }
-
 @end
 
 @implementation JRFStoriesFeedViewController
@@ -25,7 +25,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidUpdate:) name:JRFStoryStoreDidRefreshNotification object:nil];
     }
     return self;
 }
@@ -43,25 +43,61 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     [self.tableView registerNib:nib forCellReuseIdentifier:cellReuseIdentifier];
     [self.tableView registerNib:nib forCellReuseIdentifier:cellSizingReuseIdentifier];
     sizingCell = [self.tableView dequeueReusableCellWithIdentifier:cellSizingReuseIdentifier];
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.tintColor = [UIColor appTintColor];
-    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [self refreshControlString];
+    CGFloat h, s, b;
+    [[UIColor appTintColor] getHue:&h saturation:&s brightness:&b alpha:nil];
+    refreshControl.tintColor = [UIColor colorWithHue:h saturation:s/2 brightness:b alpha:1.0];;
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl layoutSubviews];
+    self.refreshControl = refreshControl;
+    UIEdgeInsets insets = self.tableView.contentInset;
+    insets.top = [self.topLayoutGuide length];
+    self.tableView.contentInset = insets;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // hack to fix a uirefreshcontrol layout bug
+    [self.refreshControl beginRefreshing];
+    [self.refreshControl endRefreshing];
+}
+
+- (void) storeDidUpdate:(NSNotification *)notification {
+    [self updateTableAndRefreshControl];
 }
 
 - (void) refresh:(id)sender {
     [self.refreshControl beginRefreshing];
     [[JRFStoryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
-        if (!error) {
-            [self.tableView reloadData];
+        if (error) {
             [self.refreshControl endRefreshing];
         }
+        else {
+            [self updateTableAndRefreshControl];
+        }
     }];
+}
+
+- (NSAttributedString *) refreshControlString {
+    NSDate *lastUpdated = [[JRFStoryStore sharedInstance] lastFetchDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSString *lastUpdatedString = @"Never";
+    if (lastUpdated) {
+        dateFormatter.dateStyle = [lastUpdated isToday] ? NSDateFormatterNoStyle : NSDateFormatterMediumStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        lastUpdatedString = [dateFormatter stringFromDate:lastUpdated];
+    }
+    lastUpdatedString = [@"Last Updated: " stringByAppendingString:lastUpdatedString];
+    return [[NSAttributedString alloc] initWithString:lastUpdatedString
+                                           attributes:@{NSFontAttributeName: [UIFont secondaryAppFontWithSize:12],
+                                                        NSForegroundColorAttributeName: [UIColor appTintColor]}];
+}
+
+- (void) updateTableAndRefreshControl {
+    self.refreshControl.attributedTitle = [self refreshControlString];
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -112,6 +148,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 - (void)presentStoryAtIndexPath:(NSIndexPath *)indexPath withComments:(BOOL)comments {
     JRFStory *story = [[[JRFStoryStore sharedInstance] allStories] objectAtIndex:indexPath.row];
     JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:story.url];
+    browser.toolbarMode = JRFToolbarModeInteractive;
     browser.navigationItem.title = story.title;
     browser.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissBrowser:)];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:browser];
@@ -120,6 +157,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     if (comments) {
+        browser.entryId = story.storyId;
         [browser showCommentsAnimated:NO];
     }
     [self presentViewController:navController animated:YES completion:nil];

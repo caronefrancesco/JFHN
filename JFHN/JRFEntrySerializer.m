@@ -10,21 +10,6 @@
 #import "JRFStory.h"
 #import "JRFStoryStore.h"
 
-@interface NSDictionary(NilSafe)
-- (id) nilSafeForKey:(id)key;
-@end
-
-@implementation NSDictionary(NilSafe)
-- (id) nilSafeForKey:(id)key {
-    id val = [self objectForKey:key];
-    if (val == [NSNull null]) {
-        return nil;
-    }
-    return val;
-}
-
-@end
-
 @implementation JRFEntrySerializer
 
 - (id)responseObjectForResponse:(NSURLResponse *)response

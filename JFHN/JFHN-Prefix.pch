@@ -15,4 +15,5 @@
     #import <Foundation/Foundation.h>
     #import "UIColor+HN.h"
     #import "UIFont+HN.h"
+    #import "NSDictionary+NilSafe.h"
 #endif

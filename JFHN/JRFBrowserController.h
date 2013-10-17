@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate>
+typedef NS_OPTIONS(NSInteger, JRFToolbarMode) {
+    JRFToolbarModeHidden = 0,
+    JRFToolbarModeInteractive = 1,
+    JRFToolbarModeVisible = 3
+};
+
+@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 - (id) initWithUrl:(NSURL *)url;
 @property(nonatomic, readwrite, weak) UIToolbar *toolbar;
+@property(nonatomic, weak) UINavigationController *navController;
+@property(nonatomic) JRFToolbarMode toolbarMode;
 @end

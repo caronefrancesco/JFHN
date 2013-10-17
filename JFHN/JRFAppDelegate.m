@@ -8,6 +8,7 @@
 
 #import "JRFAppDelegate.h"
 #import "JRFStoriesFeedViewController.h"
+#import "JRFStoryStore.h"
 
 @implementation JRFAppDelegate
 
@@ -24,6 +25,7 @@
                                  NSFontAttributeName: [UIFont primaryAppFont],
                                  };
     [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -53,6 +55,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [[JRFStoryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
+        if (error) {
+            completionHandler(UIBackgroundFetchResultFailed);
+        }
+        else {
+            completionHandler(UIBackgroundFetchResultNewData);
+        }
+    }];
 }
 
 @end

@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+
+extern NSString * const JRFStoryStoreDidRefreshNotification;
+
 @class JRFStory;
 @interface JRFStoryStore : NSObject
 + (JRFStoryStore *) sharedInstance;
 - (NSArray *) allStories;
 - (void)fetchStoriesWithCompletion:(void (^)(NSArray *stories, NSError *error))completion;
+- (void) fetchDetailsForStoryId:(NSString *)storyId withCompletion:(void (^)(JRFStory *, NSError *))completion;
 - (NSDate *)lastFetchDate;
 @end

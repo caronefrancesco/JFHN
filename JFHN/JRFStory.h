@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class JRFComment;
 
 typedef NS_ENUM(NSInteger, JRFStoryType) {
     JRFStoryTypeNormal,
@@ -15,13 +16,16 @@ typedef NS_ENUM(NSInteger, JRFStoryType) {
 };
 
 @interface JRFStory : NSObject<NSCoding>
-@property(strong, readwrite) NSString *storyId;
-@property(strong, readwrite) NSString *title;
-@property(strong, readwrite) NSURL *url;
-@property(readwrite) JRFStoryType type;
-@property(strong, readwrite) NSString *authorName;
-@property(strong, readwrite) NSDate *submittedAt;
-@property(readwrite) NSInteger commentCount;
-@property(readwrite) NSString *domain;
-@property(readwrite, getter = isRead) BOOL read;
+@property(nonatomic) NSString *storyId;
+@property(nonatomic) NSString *title;
+@property(nonatomic) NSURL *url;
+@property(nonatomic) JRFStoryType type;
+@property(nonatomic) NSString *authorName;
+@property(nonatomic) NSDate *submittedAt;
+@property(nonatomic) NSInteger commentCount;
+@property(nonatomic) NSArray *comments;
+@property(nonatomic) NSString *domain;
+@property(nonatomic) NSString *text; // for jobs/polls/etc
+@property(nonatomic, getter = isRead) BOOL read;
+- (JRFComment *)commentAtIndex:(NSInteger)index;
 @end

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5254CFAC3671482C86F93FA0"
+               BlueprintIdentifier = "0EA862C1212742D987B56C49"
                BuildableName = "libPods-BDDROneFingerZoomGestureRecognizer.a"
                BlueprintName = "Pods-BDDROneFingerZoomGestureRecognizer"
                ReferencedContainer = "container:Pods.xcodeproj">

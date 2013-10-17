@@ -9,8 +9,11 @@
 #import "JRFStoryStore.h"
 #import "JRFStory.h"
 #import "JRFEntrySerializer.h"
+#import "JRFEntryDetailSerializer.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <TMCache/TMDiskCache.h>
+
+NSString * const JRFStoryStoreDidRefreshNotification = @"JRFStoryStoreDidRefreshNotification";
 
 static NSString *lastFetchKey = @"last.fetch.date";
 
@@ -41,15 +44,35 @@ static JRFStoryStore *sharedInstance;
     return self.stories;
 }
 
+- (NSString *) baseUrl {
+    return @"http://hnapi.jackflintermann.com/entries/";
+}
+
 - (void) fetchStoriesWithCompletion:(void (^)(NSArray *, NSError *))completion {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [JRFEntrySerializer serializer];
-    [manager GET:@"http://hnapi.jackflintermann.com/entries" parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *stories) {
+    [manager GET:[self baseUrl] parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *stories) {
         self.stories = stories;
         [[TMDiskCache sharedCache] setObject:stories forKey:@"stories"];
         if (completion) {
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:lastFetchKey];
+            [[NSNotificationCenter defaultCenter] postNotificationName:JRFStoryStoreDidRefreshNotification object:stories];
             completion(stories, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion) {
+            completion(nil, error);
+        }
+    }];
+}
+
+- (void) fetchDetailsForStoryId:(NSString *)storyId withCompletion:(void (^)(JRFStory *, NSError *))completion {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [JRFEntryDetailSerializer serializer];
+    NSString *path = [[self baseUrl] stringByAppendingString:storyId];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, JRFStory *story) {
+        if (completion) {
+            completion(story, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {

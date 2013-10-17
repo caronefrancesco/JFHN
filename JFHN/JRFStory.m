@@ -7,6 +7,7 @@
 //
 
 #import "JRFStory.h"
+#import "JRFComment.h"
 #import <TMDiskCache.h>
 
 @implementation JRFStory
@@ -48,5 +49,23 @@
     [aCoder encodeObject:self.domain forKey:@"domain"];
 }
 
+- (JRFComment *)commentAtIndex:(NSInteger)index {
+    for (JRFComment *comment in [self comments]) {
+        JRFComment *indexComment = [comment commentAtIndex:index];
+        if (indexComment) {
+            return indexComment;
+        }
+        index -= comment.commentCount;
+    }
+    return nil;
+}
+
+
+- (NSInteger) commentCount {
+    if (self.comments) {
+        return [[self.comments valueForKeyPath:@"@sum.commentCount"] integerValue];
+    }
+    return _commentCount;
+}
 
 @end

@@ -7,27 +7,18 @@
 //
 
 #import "JRFHNBrowserController.h"
-
-@interface JRFHNBrowserController ()
-@property(nonatomic, readwrite)UIView *commentView;
-@end
+#import "JRFCommentViewController.h"
 
 @implementation JRFHNBrowserController
 
 - (void) showCommentsAnimated:(BOOL)animated {
-    [UIView animateWithDuration:0.3*animated animations:^{
-        
-    } completion:^(BOOL finished) {
-        _commentsShown = YES;
-    }];
+    JRFCommentViewController *commentController = [JRFCommentViewController new];
+    commentController.entryId = self.entryId;
+    [self.navController pushViewController:commentController animated:animated];
 }
 
 - (void) hideCommentsAnimated:(BOOL)animated {
-    [UIView animateWithDuration:0.3*animated animations:^{
-        
-    } completion:^(BOOL finished) {
-        _commentsShown = NO;
-    }];
+    [self.navController popViewControllerAnimated:animated];
 }
 
 - (void) viewDidLoad {
