@@ -128,7 +128,9 @@
     NSString *key = @"WebProgressEstimatedProgressKey";
     CGFloat progress = [[sender.userInfo objectForKey:key] floatValue];
     JRFWebViewController *controller = (JRFWebViewController *)self.navController.visibleViewController;
-    controller.progressView.progress = progress;
+    if ([controller respondsToSelector:@selector(progressView)]) {
+        controller.progressView.progress = progress;
+    }
 }
 
 - (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
@@ -149,8 +151,6 @@
     
 }
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -162,6 +162,21 @@
     screenEdgeGestureRecognizer.edges = UIRectEdgeRight;
     [self.navController.view addGestureRecognizer:screenEdgeGestureRecognizer];
     [self.navController.view addGestureRecognizer:emptyBackGestureRecognizer];
+    UILabel *label = [[UILabel alloc] initWithFrame:self.navigationController.navigationBar.frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.numberOfLines = 2;
+    label.attributedText = [[NSAttributedString alloc] initWithString:self.navigationItem.title attributes:[[UINavigationBar appearance] titleTextAttributes]];
+    label.textAlignment = NSTextAlignmentCenter;
+    [label setAdjustsFontSizeToFitWidth:YES];
+    label.minimumScaleFactor = 0.5;
+    self.navigationItem.titleView = label;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [UIView animateWithDuration:duration animations:^{
+        self.navigationItem.titleView.frame = self.navigationController.navigationBar.frame;
+    }];
 }
 
 - (void) pannedFromLeft:(UIScreenEdgePanGestureRecognizer *)sender {
@@ -263,6 +278,8 @@
 
 - (void) navigationController:(JRFWebViewController *)fromController
        willShowViewController:(JRFWebViewController *)toController animated:(BOOL)animated {
+    
+    self.navigationController.interactivePopGestureRecognizer.enabled = self.navController.viewControllers.count < 2;
     
     if (![toController isKindOfClass:[JRFWebViewController class]]) {
         return;

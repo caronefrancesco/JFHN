@@ -11,29 +11,17 @@
 
 #define rightPadding 10
 
+@interface JRFCommentCell()
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+@property (weak, nonatomic) IBOutlet UITextView *commentLabel;
+@end
+
 @implementation JRFCommentCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self configure];
-    }
-    return self;
-}
-
-- (void) configure {
-    UILabel *authorLabel = [[UILabel alloc] init];
-    _authorLabel = authorLabel;
-    _authorLabel.font = [UIFont primaryAppFont];
-    _authorLabel.numberOfLines = 0;
-    [self addSubview:_authorLabel];
-    UILabel *commentLabel = [[UILabel alloc] init];
-    _commentLabel = commentLabel;
-    _commentLabel.font = [UIFont secondaryAppFont];
-    _commentLabel.numberOfLines = 0;
-    _commentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self addSubview:_commentLabel];
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    self.commentLabel.textContainer.lineFragmentPadding = 0;
+    self.commentLabel.textContainerInset = UIEdgeInsetsZero;
 }
 
 - (CGFloat) xForLabels {
@@ -44,34 +32,34 @@
     return self.frame.size.width - [self xForLabels] - rightPadding;
 }
 
-- (void) layoutSubviews {
-    [super layoutSubviews];
+- (void) setIndentationLevel:(NSInteger)indentationLevel {
+    [super setIndentationLevel:indentationLevel];
     CGRect authorFrame = self.authorLabel.frame;
     authorFrame.origin.x = [self xForLabels];
-    authorFrame.origin.y = 5;
     authorFrame.size.width = [self widthForLabels];
-    authorFrame.size.height = 20;
     CGRect commentFrame = self.commentLabel.frame;
     commentFrame.origin.x = [self xForLabels];
-    commentFrame.origin.y = 30;
     commentFrame.size.width = [self widthForLabels];
-    commentFrame.size.height = self.frame.size.height - 30 - 5;
     self.authorLabel.frame = authorFrame;
     self.commentLabel.frame = commentFrame;
 }
 
-- (CGFloat)heightForComment:(JRFComment *)comment indentationLevel:(NSInteger)indentationLevel {
-    CGFloat commentY = 30;
-    CGSize boundingSize = CGSizeMake([self widthForLabels], CGFLOAT_MAX);
-    CGRect rect = [comment.text boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: self.authorLabel.font} context:nil];
-    return commentY + rect.size.height;
+- (CGSize) intrinsicContentSize {
+    CGFloat width = self.frame.size.width;
+    CGSize size = self.commentLabel.frame.size;
+    size.height = CGFLOAT_MAX;
+    CGFloat commentHeight = [self.commentLabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:[self attributesForComment] context:nil].size.height;
+    CGFloat height = CGRectGetMinY(self.commentLabel.frame) + commentHeight + 11;
+    return CGSizeMake(width, height);
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
+- (void) configureWithComment:(JRFComment *)comment {
+    self.authorLabel.text = comment.authorName;
+    self.commentLabel.attributedText = [[NSAttributedString alloc] initWithString:comment.text attributes:[self attributesForComment]];
+}
 
-    // Configure the view for the selected state
+- (NSDictionary *)attributesForComment {
+    return @{NSFontAttributeName: [UIFont secondaryAppFontWithSize:16], NSForegroundColorAttributeName: [UIColor blackColor]};
 }
 
 @end

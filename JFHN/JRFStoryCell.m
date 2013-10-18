@@ -12,21 +12,20 @@
 @interface JRFStoryCell()
 @property (weak, nonatomic) IBOutlet UILabel *storyTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storyDomainLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
 @property (weak, nonatomic) IBOutlet UILabel *commentNumberLabel;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UILabel *unreadLabel;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @end
 
 @implementation JRFStoryCell
 
 - (void) awakeFromNib {
     [super awakeFromNib];
-    UIImage *renderedContentImage = [self.commentImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIImage *renderedHighlightImage = [self.commentImageView.highlightedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.commentImageView.tintColor = [UIColor appTintColor];
-    self.commentImageView.image = renderedContentImage;
-    self.commentImageView.highlightedImage = renderedHighlightImage;
+    UIImage *renderedContentImage = [[self.commentButton imageForState:UIControlStateNormal] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *renderedHighlightImage = [[self.commentButton imageForState:UIControlStateHighlighted] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.commentButton setImage:renderedContentImage forState:UIControlStateNormal];
+    [self.commentButton setImage:renderedHighlightImage forState:UIControlStateHighlighted];
+    self.commentButton.tintColor = [UIColor appTintColor];
     self.commentNumberLabel.textColor = [UIColor appTintColor];
     self.unreadLabel.textColor = [UIColor appTintColor];
 }
@@ -55,34 +54,19 @@
 
 - (void) layoutSubviews {
     [super layoutSubviews];
-    CGRect imageFrame = self.commentImageView.frame;
-    CGRect numberFrame = self.commentNumberLabel.frame;
     CGFloat height = self.frame.size.height;
-    imageFrame.origin.y = height/2 - imageFrame.size.height + 6;
+    CGFloat imageHeight = self.commentButton.imageView.image.size.height;
+    CGRect numberFrame = self.commentNumberLabel.frame;
     numberFrame.origin.y = height/2 + 3;
-    self.commentImageView.frame = imageFrame;
+    UIEdgeInsets insets = self.commentButton.imageEdgeInsets;
+    insets.top = height/2 - imageHeight + 6;
+    insets.bottom = height - insets.top - imageHeight;
+    self.commentButton.imageEdgeInsets = insets;
     self.commentNumberLabel.frame = numberFrame;
 }
 
-- (IBAction)highlightComment:(id)sender {
-    [self.commentImageView setHighlighted:YES];
-}
-- (IBAction)unhighlightComment:(id)sender {
-    [self.commentImageView setHighlighted:NO];
-}
 - (IBAction)selectComments:(id)sender {
-    [self.commentImageView setHighlighted:NO];
     [self.delegate storyCellDidSelectComments:self];
-}
-
-- (void) setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    self.commentImageView.highlighted = NO;
-}
-
-- (void) setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    self.commentImageView.highlighted = NO;
 }
 
 @end

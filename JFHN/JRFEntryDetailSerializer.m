@@ -32,6 +32,7 @@
     JRFComment *comment = [JRFComment new];
     comment.commentId = [data nilSafeForKey:@"id"];
     comment.text = [data nilSafeForKey:@"text"];
+    comment.text = [comment.text stringByReplacingOccurrencesOfString:@"\n" withString:@"\n\n"];
     comment.authorName = [data nilSafeForKey:@"submitter"];
     comment.parent = parent;
     NSMutableArray *array = [NSMutableArray array];

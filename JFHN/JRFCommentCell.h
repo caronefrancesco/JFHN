@@ -11,7 +11,5 @@
 @class JRFComment;
 
 @interface JRFCommentCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
-- (CGFloat) heightForComment:(JRFComment *)comment indentationLevel:(NSInteger)indentationLevel;
+- (void) configureWithComment:(JRFComment *)comment;
 @end

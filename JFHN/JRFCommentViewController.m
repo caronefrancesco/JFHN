@@ -12,8 +12,7 @@
 #import "JRFComment.h"
 #import "JRFCommentCell.h"
 
-static NSString *commentCellReuseIdentifier = @"JRFCommentCell";
-static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
+static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 
 @interface JRFCommentViewController () {
     JRFCommentCell *sizingCell;
@@ -37,9 +36,9 @@ static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
     [super viewDidLoad];
     UIView *commentView = [[UIToolbar alloc] init];
     self.tableView.backgroundView = commentView;
-    [self.tableView registerClass:[JRFCommentCell class] forCellReuseIdentifier:commentCellReuseIdentifier];
-    [self.tableView registerClass:[JRFCommentCell class] forCellReuseIdentifier:sizingCommentCellReuseIdentifier];
-    sizingCell = [self.tableView dequeueReusableCellWithIdentifier:sizingCommentCellReuseIdentifier];
+    UINib *nib = [UINib nibWithNibName:kCommentCellReuseIdentifier bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:kCommentCellReuseIdentifier];
+    sizingCell = [nib instantiateWithOwner:nil options:nil][0];
     if (self.entryId) {
         [[JRFStoryStore sharedInstance] fetchDetailsForStoryId:self.entryId withCompletion:^(JRFStory *story, NSError *error) {
             if (error) {
@@ -59,6 +58,19 @@ static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    CGRect sizingFrame = sizingCell.frame;
+    sizingFrame.size.width = self.tableView.frame.size.height;
+    sizingCell.frame = sizingFrame;
+    [sizingCell layoutSubviews];
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -74,9 +86,8 @@ static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
-    JRFCommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:commentCellReuseIdentifier forIndexPath:indexPath];
-    cell.authorLabel.text = comment.authorName;
-    cell.commentLabel.text = comment.text;
+    JRFCommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellReuseIdentifier forIndexPath:indexPath];
+    [cell configureWithComment:comment];
     return cell;
 }
 
@@ -88,7 +99,9 @@ static NSString *sizingCommentCellReuseIdentifier = @"JRFSizingCommentCell";
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
     NSInteger indentation = [self tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
-    return [sizingCell heightForComment:comment indentationLevel:indentation];
+    sizingCell.indentationLevel = indentation;
+    [sizingCell configureWithComment:comment];
+    return [sizingCell intrinsicContentSize].height;
 }
 
 @end

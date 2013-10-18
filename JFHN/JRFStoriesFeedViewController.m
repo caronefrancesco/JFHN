@@ -38,7 +38,6 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.title = @"Hacker News";
     UINib *nib = [UINib nibWithNibName:cellReuseIdentifier bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:cellReuseIdentifier];
     [self.tableView registerNib:nib forCellReuseIdentifier:cellSizingReuseIdentifier];
@@ -49,18 +48,33 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     [[UIColor appTintColor] getHue:&h saturation:&s brightness:&b alpha:nil];
     refreshControl.tintColor = [UIColor colorWithHue:h saturation:s/2 brightness:b alpha:1.0];;
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.refreshControl layoutSubviews];
     self.refreshControl = refreshControl;
-    UIEdgeInsets insets = self.tableView.contentInset;
-    insets.top = [self.topLayoutGuide length];
-    self.tableView.contentInset = insets;
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"Hacker News";
     // hack to fix a uirefreshcontrol layout bug
     [self.refreshControl beginRefreshing];
     [self.refreshControl endRefreshing];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    if ([self.tableView numberOfRowsInSection:0] == 0) {
+        [self refresh:nil];
+        CGPoint newOffset = CGPointMake(0, -[self.tableView contentInset].top);
+        [self.tableView setContentOffset:newOffset animated:YES];
+    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        self.tableView.tableFooterView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+    });
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationItem.title = @"";
 }
 
 - (void) storeDidUpdate:(NSNotification *)notification {
@@ -100,17 +114,6 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     [self.refreshControl endRefreshing];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-    if ([self.tableView numberOfRowsInSection:0] == 0) {
-        [self refresh:nil];
-        CGPoint newOffset = CGPointMake(0, -[self.tableView contentInset].top);
-        [self.tableView setContentOffset:newOffset animated:YES];
-    }
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        self.tableView.tableFooterView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
-    });
-}
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -150,8 +153,6 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:story.url];
     browser.toolbarMode = JRFToolbarModeInteractive;
     browser.navigationItem.title = story.title;
-    browser.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissBrowser:)];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:browser];
     if (!story.isRead) {
         story.read = YES;
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -160,11 +161,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
         browser.entryId = story.storyId;
         [browser showCommentsAnimated:NO];
     }
-    [self presentViewController:navController animated:YES completion:nil];
-}
-
-- (void) dismissBrowser:(id) sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController pushViewController:browser animated:YES];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
