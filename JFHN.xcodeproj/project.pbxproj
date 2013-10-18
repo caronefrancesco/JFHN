@@ -13,6 +13,7 @@
 		A0077AB9180D00ED003A5FFF /* JRFCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0077AB8180D00ED003A5FFF /* JRFCommentViewController.m */; };
 		A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */; };
 		A045937B1810FF7700350BDD /* JRFCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A045937A1810FF7700350BDD /* JRFCommentCell.xib */; };
+		A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = A045937D1811975E00350BDD /* JRFURLRouter.m */; };
 		A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26C180FB7F9004F0471 /* NSDate+Utility.m */; };
 		A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */; };
 		A046F273180FCFA5004F0471 /* JRFComment.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F272180FCFA5004F0471 /* JRFComment.m */; };
@@ -59,6 +60,8 @@
 		A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFHNBrowserController.h; sourceTree = "<group>"; };
 		A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFHNBrowserController.m; sourceTree = "<group>"; };
 		A045937A1810FF7700350BDD /* JRFCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRFCommentCell.xib; sourceTree = "<group>"; };
+		A045937C1811975E00350BDD /* JRFURLRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFURLRouter.h; sourceTree = "<group>"; };
+		A045937D1811975E00350BDD /* JRFURLRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFURLRouter.m; sourceTree = "<group>"; };
 		A046F26B180FB7F9004F0471 /* NSDate+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utility.h"; sourceTree = "<group>"; };
 		A046F26C180FB7F9004F0471 /* NSDate+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utility.m"; sourceTree = "<group>"; };
 		A046F26E180FCF4A004F0471 /* JRFEntryDetailSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntryDetailSerializer.h; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 				A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */,
 				A0B441BB180B809200529C07 /* JRFBrowserController.h */,
 				A0B441BC180B809200529C07 /* JRFBrowserController.m */,
+				A045937C1811975E00350BDD /* JRFURLRouter.h */,
+				A045937D1811975E00350BDD /* JRFURLRouter.m */,
 				A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */,
 				A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */,
 				A0077AB7180D00ED003A5FFF /* JRFCommentViewController.h */,
@@ -373,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */,
+				A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */,
 				A0B441AD1808E09F00529C07 /* JRFStory.m in Sources */,
 				A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */,
 				A0077AB9180D00ED003A5FFF /* JRFCommentViewController.m in Sources */,

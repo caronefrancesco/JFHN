@@ -7,26 +7,7 @@
 //
 
 #import "JRFBrowserController.h"
-
-@interface UIView(RecursiveChild)
-- (BOOL) isParentOfView:(UIView *)view;
-@end
-
-@implementation UIView(RecursiveChild)
-
-- (BOOL) isParentOfView:(UIView *)view {
-    if (view == self) {
-        return YES;
-    }
-    for (UIView *subView in self.subviews) {
-        if ([subView isParentOfView:view]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-@end
+#import "JRFURLRouter.h"
 
 @interface JRFWebViewController : UIViewController
 @property(nonatomic, readonly) NSURL *url;
@@ -96,12 +77,6 @@
 
 @end
 
-@interface JRFBrowserController() {
-    CGPoint backPanPoint;
-}
-
-@end
-
 @implementation JRFBrowserController
 
 - (id) initWithUrl:(NSURL *)url {
@@ -122,7 +97,6 @@
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 - (void) notified:(NSNotification *)sender {
     NSString *key = @"WebProgressEstimatedProgressKey";
@@ -230,6 +204,12 @@
     if ([currentController.url isEqual:request.URL]) {
         return YES;
     }
+    
+    if ([[JRFURLRouter sharedInstance] canRouteUrl:request.URL]) {
+        [[JRFURLRouter sharedInstance] routeUrl:request.URL];
+        return NO;
+    }
+    
     JRFWebViewController *webViewController = [[JRFWebViewController alloc] initWithUrl:request.URL delegate:self];
     [self.navController pushViewController:webViewController animated:NO];
     return NO;
