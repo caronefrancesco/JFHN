@@ -27,8 +27,6 @@
         NSString *progressEstimateName = [@"WebProgressEstimateChanged" stringByAppendingString:@"Notification"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notified:) name:progressEstimateName object:nil];
         webView.delegate = self;
-#warning todo
-        //        webView.scrollView.delegate = delegate;
         webView.backgroundColor = [UIColor whiteColor];
         _webView = webView;
         _request = request;
@@ -47,8 +45,14 @@
     _progressView = progressView;
     _progressView.progress = 0.0f;
     self.webView.frame = self.view.bounds;
+    self.webView.scrollView.delegate = self.delegate;
     [self.view addSubview:self.webView];
     [self.view addSubview:self.progressView];
+}
+
+- (void) setDelegate:(id<JRFWebViewDelegate>)delegate {
+    _delegate = delegate;
+    self.webView.scrollView.delegate = delegate;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
