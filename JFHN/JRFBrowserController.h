@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JRFWebViewDelegate.h"
 
 typedef NS_OPTIONS(NSInteger, JRFToolbarMode) {
     JRFToolbarModeHidden = 0,
@@ -14,7 +15,7 @@ typedef NS_OPTIONS(NSInteger, JRFToolbarMode) {
     JRFToolbarModeVisible = 3
 };
 
-@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, UIWebViewDelegate, UIScrollViewDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
+@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, UIScrollViewDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, JRFWebViewDelegate>
 - (id) initWithUrl:(NSURL *)url;
 @property(nonatomic, readwrite, weak) UIToolbar *toolbar;
 @property(nonatomic, weak) UINavigationController *navController;

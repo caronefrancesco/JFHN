@@ -23,11 +23,6 @@
     }
 }
 
-- (NSURL *)url {
-#warning testing
-    return [NSURL URLWithString:@"http://twitter.com/jflinter"];
-}
-
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
     if (self) {

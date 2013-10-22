@@ -14,6 +14,7 @@
 		A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */; };
 		A045937B1810FF7700350BDD /* JRFCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A045937A1810FF7700350BDD /* JRFCommentCell.xib */; };
 		A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = A045937D1811975E00350BDD /* JRFURLRouter.m */; };
+		A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04593801814CD9A00350BDD /* JRFWebViewController.m */; };
 		A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26C180FB7F9004F0471 /* NSDate+Utility.m */; };
 		A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */; };
 		A046F273180FCFA5004F0471 /* JRFComment.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F272180FCFA5004F0471 /* JRFComment.m */; };
@@ -62,6 +63,9 @@
 		A045937A1810FF7700350BDD /* JRFCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRFCommentCell.xib; sourceTree = "<group>"; };
 		A045937C1811975E00350BDD /* JRFURLRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFURLRouter.h; sourceTree = "<group>"; };
 		A045937D1811975E00350BDD /* JRFURLRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFURLRouter.m; sourceTree = "<group>"; };
+		A045937F1814CD9A00350BDD /* JRFWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFWebViewController.h; sourceTree = "<group>"; };
+		A04593801814CD9A00350BDD /* JRFWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFWebViewController.m; sourceTree = "<group>"; };
+		A04593821814D12600350BDD /* JRFWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JRFWebViewDelegate.h; sourceTree = "<group>"; };
 		A046F26B180FB7F9004F0471 /* NSDate+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utility.h"; sourceTree = "<group>"; };
 		A046F26C180FB7F9004F0471 /* NSDate+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utility.m"; sourceTree = "<group>"; };
 		A046F26E180FCF4A004F0471 /* JRFEntryDetailSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntryDetailSerializer.h; sourceTree = "<group>"; };
@@ -175,9 +179,6 @@
 				A0B441AC1808E09F00529C07 /* JRFStory.m */,
 				A046F271180FCFA5004F0471 /* JRFComment.h */,
 				A046F272180FCFA5004F0471 /* JRFComment.m */,
-				A046F27B180FE221004F0471 /* JRFCommentCell.h */,
-				A046F27C180FE221004F0471 /* JRFCommentCell.m */,
-				A045937A1810FF7700350BDD /* JRFCommentCell.xib */,
 				A0B441AE1808E81800529C07 /* JRFStoryCell.h */,
 				A0B441AF1808E81800529C07 /* JRFStoryCell.m */,
 				A0B441B11808E82600529C07 /* JRFStoryCell.xib */,
@@ -185,14 +186,20 @@
 				A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */,
 				A046F26E180FCF4A004F0471 /* JRFEntryDetailSerializer.h */,
 				A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */,
+				A04593821814D12600350BDD /* JRFWebViewDelegate.h */,
+				A045937F1814CD9A00350BDD /* JRFWebViewController.h */,
+				A04593801814CD9A00350BDD /* JRFWebViewController.m */,
 				A0B441BB180B809200529C07 /* JRFBrowserController.h */,
 				A0B441BC180B809200529C07 /* JRFBrowserController.m */,
-				A045937C1811975E00350BDD /* JRFURLRouter.h */,
-				A045937D1811975E00350BDD /* JRFURLRouter.m */,
 				A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */,
 				A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */,
+				A045937C1811975E00350BDD /* JRFURLRouter.h */,
+				A045937D1811975E00350BDD /* JRFURLRouter.m */,
 				A0077AB7180D00ED003A5FFF /* JRFCommentViewController.h */,
 				A0077AB8180D00ED003A5FFF /* JRFCommentViewController.m */,
+				A046F27B180FE221004F0471 /* JRFCommentCell.h */,
+				A046F27C180FE221004F0471 /* JRFCommentCell.m */,
+				A045937A1810FF7700350BDD /* JRFCommentCell.xib */,
 				A0077AAE180CDF75003A5FFF /* UIColor+HN.h */,
 				A0077AAF180CDF75003A5FFF /* UIColor+HN.m */,
 				A0077AB1180CDFBB003A5FFF /* UIFont+HN.h */,
@@ -386,6 +393,7 @@
 				A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */,
 				A0B441AA1808DF9A00529C07 /* JRFStoryStore.m in Sources */,
 				A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */,
+				A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */,
 				A0077AB0180CDF75003A5FFF /* UIColor+HN.m in Sources */,
 				A0077AB3180CDFBB003A5FFF /* UIFont+HN.m in Sources */,
 				A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */,

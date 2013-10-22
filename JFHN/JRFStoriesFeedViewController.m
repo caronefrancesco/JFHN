@@ -49,12 +49,12 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     refreshControl.tintColor = [UIColor colorWithHue:h saturation:s/2 brightness:b alpha:1.0];;
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    self.navigationItem.backBarButtonItem.title = @"";
+    self.title = @"Hacker News";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Hacker News";
     // hack to fix a uirefreshcontrol layout bug
     [self.refreshControl beginRefreshing];
     [self.refreshControl endRefreshing];
@@ -70,11 +70,6 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     dispatch_once(&onceToken, ^{
         self.tableView.tableFooterView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
     });
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.navigationItem.title = @"";
 }
 
 - (void) storeDidUpdate:(NSNotification *)notification {

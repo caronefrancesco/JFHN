@@ -13,6 +13,7 @@
 
 - (void) showCommentsAnimated:(BOOL)animated {
     JRFCommentViewController *commentController = [JRFCommentViewController new];
+    commentController.scrollViewDelegate = self;
     commentController.entryId = self.entryId;
     [self.navController pushViewController:commentController animated:animated];
 }
@@ -22,6 +23,7 @@
 }
 
 - (void) viewDidLoad {
+    self.view.tintColor = [UIColor appTintColor];
     [super viewDidLoad];
     UIImage *image = [UIImage imageNamed:@"842-chat-bubbles"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

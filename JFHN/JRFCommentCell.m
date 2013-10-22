@@ -20,6 +20,7 @@
 
 - (void) awakeFromNib {
     [super awakeFromNib];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.commentLabel.textContainer.lineFragmentPadding = 0;
     self.commentLabel.textContainerInset = UIEdgeInsetsZero;
 }
@@ -42,6 +43,9 @@
     commentFrame.size.width = [self widthForLabels];
     self.authorLabel.frame = authorFrame;
     self.commentLabel.frame = commentFrame;
+    UIEdgeInsets insets = self.separatorInset;
+    insets.left = [self xForLabels];
+    self.separatorInset = insets;
 }
 
 - (CGSize) intrinsicContentSize {

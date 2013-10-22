@@ -38,6 +38,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     self.tableView.backgroundView = commentView;
     UINib *nib = [UINib nibWithNibName:kCommentCellReuseIdentifier bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:kCommentCellReuseIdentifier];
+    self.tableView.tableFooterView = [UIView new];
     sizingCell = [nib instantiateWithOwner:nil options:nil][0];
     if (self.entryId) {
         [[JRFStoryStore sharedInstance] fetchDetailsForStoryId:self.entryId withCompletion:^(JRFStory *story, NSError *error) {
@@ -102,6 +103,12 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     sizingCell.indentationLevel = indentation;
     [sizingCell configureWithComment:comment];
     return [sizingCell intrinsicContentSize].height;
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+        [self.scrollViewDelegate scrollViewDidScroll:scrollView];
+    }
 }
 
 @end

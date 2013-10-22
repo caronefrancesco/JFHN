@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface JRFCommentViewController : UITableViewController
+@property(nonatomic) id<UIScrollViewDelegate> scrollViewDelegate;
 @property(nonatomic) NSString *entryId;
 @end
