@@ -20,6 +20,8 @@
 		A046F273180FCFA5004F0471 /* JRFComment.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F272180FCFA5004F0471 /* JRFComment.m */; };
 		A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */; };
 		A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F27C180FE221004F0471 /* JRFCommentCell.m */; };
+		A07EA39018163F27005E6D5F /* JRFWebViewController+Instapaper.m in Sources */ = {isa = PBXBuildFile; fileRef = A07EA38F18163F27005E6D5F /* JRFWebViewController+Instapaper.m */; };
+		A07EA393181640CA005E6D5F /* JRFInstapaperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07EA392181640CA005E6D5F /* JRFInstapaperViewController.m */; };
 		A0B441711808DB3F00529C07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441701808DB3F00529C07 /* Foundation.framework */; };
 		A0B441731808DB3F00529C07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441721808DB3F00529C07 /* CoreGraphics.framework */; };
 		A0B441751808DB3F00529C07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441741808DB3F00529C07 /* UIKit.framework */; };
@@ -76,6 +78,10 @@
 		A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NilSafe.m"; sourceTree = "<group>"; };
 		A046F27B180FE221004F0471 /* JRFCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFCommentCell.h; sourceTree = "<group>"; };
 		A046F27C180FE221004F0471 /* JRFCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFCommentCell.m; sourceTree = "<group>"; };
+		A07EA38E18163F27005E6D5F /* JRFWebViewController+Instapaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRFWebViewController+Instapaper.h"; sourceTree = "<group>"; };
+		A07EA38F18163F27005E6D5F /* JRFWebViewController+Instapaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRFWebViewController+Instapaper.m"; sourceTree = "<group>"; };
+		A07EA391181640CA005E6D5F /* JRFInstapaperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFInstapaperViewController.h; sourceTree = "<group>"; };
+		A07EA392181640CA005E6D5F /* JRFInstapaperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFInstapaperViewController.m; sourceTree = "<group>"; };
 		A0B4416D1808DB3F00529C07 /* JFHN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFHN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B441701808DB3F00529C07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A0B441721808DB3F00529C07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -189,6 +195,10 @@
 				A04593821814D12600350BDD /* JRFWebViewDelegate.h */,
 				A045937F1814CD9A00350BDD /* JRFWebViewController.h */,
 				A04593801814CD9A00350BDD /* JRFWebViewController.m */,
+				A07EA38E18163F27005E6D5F /* JRFWebViewController+Instapaper.h */,
+				A07EA38F18163F27005E6D5F /* JRFWebViewController+Instapaper.m */,
+				A07EA391181640CA005E6D5F /* JRFInstapaperViewController.h */,
+				A07EA392181640CA005E6D5F /* JRFInstapaperViewController.m */,
 				A0B441BB180B809200529C07 /* JRFBrowserController.h */,
 				A0B441BC180B809200529C07 /* JRFBrowserController.m */,
 				A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */,
@@ -391,11 +401,13 @@
 				A0077AB9180D00ED003A5FFF /* JRFCommentViewController.m in Sources */,
 				A0B4417D1808DB3F00529C07 /* main.m in Sources */,
 				A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */,
+				A07EA39018163F27005E6D5F /* JRFWebViewController+Instapaper.m in Sources */,
 				A0B441AA1808DF9A00529C07 /* JRFStoryStore.m in Sources */,
 				A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */,
 				A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */,
 				A0077AB0180CDF75003A5FFF /* UIColor+HN.m in Sources */,
 				A0077AB3180CDFBB003A5FFF /* UIFont+HN.m in Sources */,
+				A07EA393181640CA005E6D5F /* JRFInstapaperViewController.m in Sources */,
 				A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */,
 				A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */,
 				A0B441BA18092C3C00529C07 /* JRFEntrySerializer.m in Sources */,

@@ -11,6 +11,12 @@
 #import <TMDiskCache.h>
 
 @implementation JRFStory
+
+- (NSInteger) score {
+    return 50;
+#warning todo
+}
+
 - (BOOL) isRead {
     return [[TMDiskCache sharedCache] objectForKey:self.storyId] != nil;
 }

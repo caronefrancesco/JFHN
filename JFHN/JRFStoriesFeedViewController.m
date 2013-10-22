@@ -148,12 +148,12 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:story.url];
     browser.toolbarMode = JRFToolbarModeInteractive;
     browser.navigationItem.title = story.title;
+    browser.entryId = story.storyId;
     if (!story.isRead) {
         story.read = YES;
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     if (comments) {
-        browser.entryId = story.storyId;
         [browser showCommentsAnimated:NO];
     }
     [self.navigationController pushViewController:browser animated:YES];

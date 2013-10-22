@@ -42,7 +42,7 @@
 
 - (void) configureWithStory:(JRFStory *)story {
     self.storyTitleLabel.text = story.title;
-    self.storyDomainLabel.text = story.domain;
+    self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@", story.score, story.domain];
     self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
     self.unreadLabel.hidden = story.isRead;
 }

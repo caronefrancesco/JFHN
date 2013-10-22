@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, JRFStoryType) {
 @property(nonatomic) NSString *authorName;
 @property(nonatomic) NSDate *submittedAt;
 @property(nonatomic) NSInteger commentCount;
+@property(nonatomic) NSInteger score;
 @property(nonatomic) NSArray *comments;
 @property(nonatomic) NSString *domain;
 @property(nonatomic) NSString *text; // for jobs/polls/etc

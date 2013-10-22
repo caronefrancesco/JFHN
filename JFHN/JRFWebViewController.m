@@ -10,7 +10,6 @@
 #import "JRFURLRouter.h"
 
 @interface JRFWebViewController()
-@property(nonatomic) NSURLRequest *request;
 @property(nonatomic, readonly) UIWebView *webView;
 @property(nonatomic, weak) UIProgressView *progressView;
 @property(nonatomic) BOOL finishedLoading;
@@ -75,7 +74,6 @@
 
 - (BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (navigationType != UIWebViewNavigationTypeLinkClicked) {
-        self.request = request;
         return YES;
     }
     

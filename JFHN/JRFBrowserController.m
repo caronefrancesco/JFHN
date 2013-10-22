@@ -80,24 +80,24 @@
     [self.navController pushViewController:webViewController animated:NO];
 }
 
-//
-//- (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-//    return self;
-//}
-//
-//- (id<UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
-//    return self;
-//}
-//
-//- (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-//    return 1.0;
-//}
-//
-//- (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-//    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-//    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-//
-//}
+
+- (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return self;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
+    return self;
+}
+
+- (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 1.0;
+}
+
+- (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+
+}
 
 
 - (void) pannedFromRight:(UIScreenEdgePanGestureRecognizer *)sender {
@@ -169,6 +169,10 @@
     [super didReceiveMemoryWarning];
 #warning TODO: drop the stack
     // Dispose of any resources that can be recreated.
+}
+
+- (JRFWebViewController *)visibleWebViewController {
+    return [self.navController visibleViewController];
 }
 
 @end

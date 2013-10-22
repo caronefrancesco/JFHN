@@ -19,5 +19,7 @@ typedef NS_OPTIONS(NSInteger, JRFToolbarMode) {
 - (id) initWithUrl:(NSURL *)url;
 @property(nonatomic, readwrite, weak) UIToolbar *toolbar;
 @property(nonatomic, weak) UINavigationController *navController;
+- (JRFWebViewController *)visibleWebViewController;
 @property(nonatomic) JRFToolbarMode toolbarMode;
+- (void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated;
 @end

@@ -12,4 +12,5 @@
 @interface JRFWebViewController : UIViewController<UIWebViewDelegate>
 @property(weak, nonatomic) id<JRFWebViewDelegate> delegate;
 - (id) initWithUrlRequest:(NSURLRequest *)request;
+@property(nonatomic) NSURLRequest *request;
 @end
