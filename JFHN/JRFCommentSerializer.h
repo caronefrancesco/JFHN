@@ -1,5 +1,5 @@
 //
-//  JRFEntryDetailSerializer.h
+//  JRFCommentSerializer.h
 //  JFHN
 //
 //  Created by Jack Flintermann on 10/17/13.
@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 
-@interface JRFEntryDetailSerializer : AFJSONResponseSerializer
+@interface JRFCommentSerializer : AFHTTPResponseSerializer
 
 @end

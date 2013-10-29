@@ -9,6 +9,7 @@
 #import "NSDictionary+NilSafe.h"
 
 @implementation NSDictionary(NilSafe)
+
 - (id) nilSafeForKey:(id)key {
     id val = [self objectForKey:key];
     if (val == [NSNull null]) {

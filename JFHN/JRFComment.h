@@ -9,12 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface JRFComment : NSObject
-- (JRFComment *)commentAtIndex:(NSInteger)index;
-@property(nonatomic) NSString *commentId;
-@property(nonatomic) NSArray *comments;
 @property(nonatomic) NSString *text;
 @property(nonatomic) NSString *authorName;
-@property(nonatomic) JRFComment *parent;
-@property(nonatomic, readonly) NSInteger depth;
-@property(nonatomic, readonly) NSInteger commentCount;
+@property(nonatomic) NSInteger depth;
 @end

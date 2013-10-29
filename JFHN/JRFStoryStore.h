@@ -15,6 +15,6 @@ extern NSString * const JRFStoryStoreDidRefreshNotification;
 + (JRFStoryStore *) sharedInstance;
 - (NSArray *) allStories;
 - (void)fetchStoriesWithCompletion:(void (^)(NSArray *stories, NSError *error))completion;
-- (void) fetchDetailsForStoryId:(NSString *)storyId withCompletion:(void (^)(JRFStory *, NSError *))completion;
+- (void) fetchCommentsForStory:(JRFStory *)story withCompletion:(void (^)(NSArray *comments, NSError *error))completion;
 - (NSDate *)lastFetchDate;
 @end

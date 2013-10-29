@@ -16,7 +16,7 @@
 		A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = A045937D1811975E00350BDD /* JRFURLRouter.m */; };
 		A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04593801814CD9A00350BDD /* JRFWebViewController.m */; };
 		A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26C180FB7F9004F0471 /* NSDate+Utility.m */; };
-		A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */; };
+		A046F270180FCF4A004F0471 /* JRFCommentSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFCommentSerializer.m */; };
 		A046F273180FCFA5004F0471 /* JRFComment.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F272180FCFA5004F0471 /* JRFComment.m */; };
 		A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */; };
 		A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F27C180FE221004F0471 /* JRFCommentCell.m */; };
@@ -41,6 +41,8 @@
 		A0B441B21808E82600529C07 /* JRFStoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B441B11808E82600529C07 /* JRFStoryCell.xib */; };
 		A0B441BA18092C3C00529C07 /* JRFEntrySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */; };
 		A0B441BD180B809200529C07 /* JRFBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441BC180B809200529C07 /* JRFBrowserController.m */; };
+		A0F2732D181F6DDB005521D1 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F27329181F6DDB005521D1 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A0F2732E181F6DDB005521D1 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F2732B181F6DDB005521D1 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +72,8 @@
 		A04593821814D12600350BDD /* JRFWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JRFWebViewDelegate.h; sourceTree = "<group>"; };
 		A046F26B180FB7F9004F0471 /* NSDate+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utility.h"; sourceTree = "<group>"; };
 		A046F26C180FB7F9004F0471 /* NSDate+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utility.m"; sourceTree = "<group>"; };
-		A046F26E180FCF4A004F0471 /* JRFEntryDetailSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntryDetailSerializer.h; sourceTree = "<group>"; };
-		A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntryDetailSerializer.m; sourceTree = "<group>"; };
+		A046F26E180FCF4A004F0471 /* JRFCommentSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFCommentSerializer.h; sourceTree = "<group>"; };
+		A046F26F180FCF4A004F0471 /* JRFCommentSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFCommentSerializer.m; sourceTree = "<group>"; };
 		A046F271180FCFA5004F0471 /* JRFComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFComment.h; sourceTree = "<group>"; };
 		A046F272180FCFA5004F0471 /* JRFComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFComment.m; sourceTree = "<group>"; };
 		A046F274180FD01D004F0471 /* NSDictionary+NilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NilSafe.h"; sourceTree = "<group>"; };
@@ -111,6 +113,10 @@
 		A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntrySerializer.m; sourceTree = "<group>"; };
 		A0B441BB180B809200529C07 /* JRFBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFBrowserController.h; sourceTree = "<group>"; };
 		A0B441BC180B809200529C07 /* JRFBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFBrowserController.m; sourceTree = "<group>"; };
+		A0F27329181F6DDB005521D1 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		A0F2732A181F6DDB005521D1 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		A0F2732B181F6DDB005521D1 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		A0F2732C181F6DDB005521D1 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		ED7B3820CE5540D3A6671128 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49651D2A68643A4BF21E552 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,8 +196,8 @@
 				A0B441B11808E82600529C07 /* JRFStoryCell.xib */,
 				A0B441B818092C3C00529C07 /* JRFEntrySerializer.h */,
 				A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */,
-				A046F26E180FCF4A004F0471 /* JRFEntryDetailSerializer.h */,
-				A046F26F180FCF4A004F0471 /* JRFEntryDetailSerializer.m */,
+				A046F26E180FCF4A004F0471 /* JRFCommentSerializer.h */,
+				A046F26F180FCF4A004F0471 /* JRFCommentSerializer.m */,
 				A04593821814D12600350BDD /* JRFWebViewDelegate.h */,
 				A045937F1814CD9A00350BDD /* JRFWebViewController.h */,
 				A04593801814CD9A00350BDD /* JRFWebViewController.m */,
@@ -218,6 +224,10 @@
 				A046F274180FD01D004F0471 /* NSDictionary+NilSafe.h */,
 				A046F275180FD01D004F0471 /* NSDictionary+NilSafe.m */,
 				A046F26C180FB7F9004F0471 /* NSDate+Utility.m */,
+				A0F27329181F6DDB005521D1 /* NSString+HTML.m */,
+				A0F2732A181F6DDB005521D1 /* NSString+HTML.h */,
+				A0F2732B181F6DDB005521D1 /* GTMNSString+HTML.m */,
+				A0F2732C181F6DDB005521D1 /* GTMNSString+HTML.h */,
 				A0B4418B1808DB3F00529C07 /* Images.xcassets */,
 				A0B441771808DB3F00529C07 /* Supporting Files */,
 			);
@@ -394,7 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A046F270180FCF4A004F0471 /* JRFEntryDetailSerializer.m in Sources */,
+				A046F270180FCF4A004F0471 /* JRFCommentSerializer.m in Sources */,
 				A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */,
 				A0B441AD1808E09F00529C07 /* JRFStory.m in Sources */,
 				A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */,
@@ -408,6 +418,7 @@
 				A0077AB0180CDF75003A5FFF /* UIColor+HN.m in Sources */,
 				A0077AB3180CDFBB003A5FFF /* UIFont+HN.m in Sources */,
 				A07EA393181640CA005E6D5F /* JRFInstapaperViewController.m in Sources */,
+				A0F2732D181F6DDB005521D1 /* NSString+HTML.m in Sources */,
 				A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */,
 				A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */,
 				A0B441BA18092C3C00529C07 /* JRFEntrySerializer.m in Sources */,
@@ -415,6 +426,7 @@
 				A0B441871808DB3F00529C07 /* JRFStoriesFeedViewController.m in Sources */,
 				A0B441BD180B809200529C07 /* JRFBrowserController.m in Sources */,
 				A0B441811808DB3F00529C07 /* JRFAppDelegate.m in Sources */,
+				A0F2732E181F6DDB005521D1 /* GTMNSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,14 +56,7 @@
 }
 
 - (JRFComment *)commentAtIndex:(NSInteger)index {
-    for (JRFComment *comment in [self comments]) {
-        JRFComment *indexComment = [comment commentAtIndex:index];
-        if (indexComment) {
-            return indexComment;
-        }
-        index -= comment.commentCount;
-    }
-    return nil;
+    return [self.comments objectAtIndex:index];
 }
 
 

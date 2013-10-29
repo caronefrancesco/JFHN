@@ -9,7 +9,7 @@
 #import "JRFStoryStore.h"
 #import "JRFStory.h"
 #import "JRFEntrySerializer.h"
-#import "JRFEntryDetailSerializer.h"
+#import "JRFCommentSerializer.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <TMCache/TMDiskCache.h>
 
@@ -66,13 +66,13 @@ static JRFStoryStore *sharedInstance;
     }];
 }
 
-- (void) fetchDetailsForStoryId:(NSString *)storyId withCompletion:(void (^)(JRFStory *, NSError *))completion {
+- (void) fetchCommentsForStory:(JRFStory *)story withCompletion:(void (^)(NSArray *comments, NSError *error))completion {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [JRFEntryDetailSerializer serializer];
-    NSString *path = [[self baseUrl] stringByAppendingString:storyId];
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, JRFStory *story) {
+    manager.responseSerializer = [JRFCommentSerializer serializer];
+    NSString *path = @"https://news.ycombinator.com/item";
+    [manager GET:path parameters:@{@"id": story.storyId} success:^(AFHTTPRequestOperation *operation, NSArray *comments) {
         if (completion) {
-            completion(story, nil);
+            completion(comments, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {

@@ -23,6 +23,7 @@ PODS:
   - BDDRScrollViewAdditions (1.1.1):
     - BDDROneFingerZoomGestureRecognizer (~> 1.0)
     - JRSwizzle (~> 1.0)
+  - hpple (0.3.0)
   - JRSwizzle (1.0)
   - Reveal-iOS-SDK (1.0.0)
   - TMCache (1.2.0)
@@ -30,13 +31,19 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - BDDRScrollViewAdditions (~> 1.1)
+  - hpple (from `https://github.com/jflinter/hpple.git`)
   - Reveal-iOS-SDK
   - TMCache (~> 1.2)
+
+EXTERNAL SOURCES:
+  hpple:
+    :git: https://github.com/jflinter/hpple.git
 
 SPEC CHECKSUMS:
   AFNetworking: a6f11ac4ac087303e6ff87adc1ba57b0dac20ef8
   BDDROneFingerZoomGestureRecognizer: f9233809a97b836486615fa23ca4ba4e4300d0a5
   BDDRScrollViewAdditions: 74642c9ecb1af9add1c8156ed9d202c10584be97
+  hpple: 06037f29c984635027597cfbaec32996f25b6da3
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   Reveal-iOS-SDK: 5d9715f81487585744d70eba7d81b345b8093e28
   TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27

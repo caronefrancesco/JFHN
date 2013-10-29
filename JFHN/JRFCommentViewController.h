@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JRFStory;
 
 @interface JRFCommentViewController : UITableViewController
 @property(nonatomic) id<UIScrollViewDelegate> scrollViewDelegate;
-@property(nonatomic) NSString *entryId;
+@property(nonatomic) JRFStory *story;
 @end

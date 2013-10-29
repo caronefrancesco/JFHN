@@ -148,7 +148,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:story.url];
     browser.toolbarMode = JRFToolbarModeInteractive;
     browser.navigationItem.title = story.title;
-    browser.entryId = story.storyId;
+    browser.story = story;
     if (!story.isRead) {
         story.read = YES;
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

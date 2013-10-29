@@ -7,9 +7,10 @@
 //
 
 #import "JRFBrowserController.h"
+@class JRFStory;
 
 @interface JRFHNBrowserController : JRFBrowserController
-@property(nonatomic)NSString *entryId;
+@property(nonatomic)JRFStory *story;
 @property(nonatomic, readonly)BOOL commentsShown;
 - (void) showCommentsAnimated:(BOOL)animated;
 - (void) hideCommentsAnimated:(BOOL)animated;

@@ -17,7 +17,6 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 @interface JRFCommentViewController () {
     JRFCommentCell *sizingCell;
 }
-@property(nonatomic) JRFStory *story;
 @end
 
 @implementation JRFCommentViewController
@@ -40,13 +39,14 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     [self.tableView registerNib:nib forCellReuseIdentifier:kCommentCellReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     sizingCell = [nib instantiateWithOwner:nil options:nil][0];
-    if (self.entryId) {
-        [[JRFStoryStore sharedInstance] fetchDetailsForStoryId:self.entryId withCompletion:^(JRFStory *story, NSError *error) {
+    if (self.story) {
+        [[JRFStoryStore sharedInstance] fetchCommentsForStory:self.story withCompletion:^(NSArray *comments, NSError *error) {
             if (error) {
 #warning todo: error
             }
             else {
-                self.story = story;
+                self.story.comments = comments;
+                self.story.commentCount = comments.count;
                 [self.tableView reloadData];
             }
         }];
@@ -81,7 +81,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.story commentCount];
+    return self.story.comments.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

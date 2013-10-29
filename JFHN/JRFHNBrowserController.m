@@ -15,7 +15,7 @@
 - (void) showCommentsAnimated:(BOOL)animated {
     JRFCommentViewController *commentController = [JRFCommentViewController new];
     commentController.scrollViewDelegate = self;
-    commentController.entryId = self.entryId;
+    commentController.story = self.story;
     _commentsShown = YES;
     [self.navController pushViewController:commentController animated:animated];
 }
