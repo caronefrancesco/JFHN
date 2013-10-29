@@ -47,6 +47,9 @@
     self.webView.scrollView.delegate = self.delegate;
     [self.view addSubview:self.webView];
     [self.view addSubview:self.progressView];
+    
+    self.finishedLoading = NO;
+    _progressView.progress = 0.0f;
 }
 
 - (void) setDelegate:(id<JRFWebViewDelegate>)delegate {
@@ -61,6 +64,7 @@
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
+    self.finishedLoading = ![self.webView isLoading];
     [self.webView stopLoading];
 }
 
@@ -86,20 +90,21 @@
     return NO;
 }
 
-
-- (void) webViewDidStartLoad:(UIWebView *)webView {
-    self.finishedLoading = NO;
-    _progressView.progress = 0.0f;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.progressView.alpha = 1.0f;
-    }];
-}
-
 - (void) notified:(NSNotification *)sender {
     NSString *key = @"WebProgressEstimatedProgressKey";
     CGFloat progress = [[sender.userInfo objectForKey:key] floatValue];
-    if (self.view.window) {
-        self.progressView.progress = progress;
+    if (self.isViewLoaded && self.view.window) {
+        CGFloat adjustedProgress = MAX(self.progressView.progress, progress);
+        if (adjustedProgress < 0.2f) {
+            CGFloat test = 0.2f - powf((0.2f - adjustedProgress), 1.5);
+            adjustedProgress = test;
+        }
+        if (self.progressView.progress < 0.05f) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.progressView.alpha = 1.0f;
+            }];
+        }
+        self.progressView.progress = adjustedProgress;
         if (progress > 0.99f) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.progressView.alpha = 0.0f;
