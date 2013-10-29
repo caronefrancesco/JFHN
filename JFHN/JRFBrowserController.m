@@ -47,6 +47,8 @@
     [label setAdjustsFontSizeToFitWidth:YES];
     label.minimumScaleFactor = 0.5;
     self.navigationItem.titleView = label;
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacerView];
 }
 
 - (void) pannedFromLeft:(UIScreenEdgePanGestureRecognizer *)sender {
