@@ -59,7 +59,9 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     if (!self.finishedLoading) {
-        [self.webView loadRequest:self.request];        
+        [self.webView loadRequest:self.request];
+        CGFloat progress = MAX(self.progressView.progress, 0.05);
+        [self.progressView setProgress:progress animated:YES];
     }
 }
 
