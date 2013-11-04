@@ -12,11 +12,6 @@
 
 @implementation JRFStory
 
-- (NSInteger) score {
-    return 50;
-#warning todo
-}
-
 - (BOOL) isRead {
     return [[TMDiskCache sharedCache] objectForKey:self.storyId] != nil;
 }
@@ -40,6 +35,7 @@
         self.submittedAt = [aDecoder decodeObjectForKey:@"submittedAt"];
         self.commentCount = [aDecoder decodeIntegerForKey:@"commentCount"];
         self.domain = [aDecoder decodeObjectForKey:@"domain"];
+        self.score = [aDecoder decodeIntegerForKey:@"score"];
     }
     return self;
 }
@@ -53,6 +49,7 @@
     [aCoder encodeObject:self.submittedAt forKey:@"submittedAt"];
     [aCoder encodeInteger:self.commentCount forKey:@"commentCount"];
     [aCoder encodeObject:self.domain forKey:@"domain"];
+    [aCoder encodeInteger:self.score forKey:@"score"];
 }
 
 - (JRFComment *)commentAtIndex:(NSInteger)index {
@@ -62,7 +59,7 @@
 
 - (NSInteger) commentCount {
     if (self.comments) {
-        return [[self.comments valueForKeyPath:@"@sum.commentCount"] integerValue];
+        return self.comments.count;
     }
     return _commentCount;
 }

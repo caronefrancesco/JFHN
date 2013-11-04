@@ -44,14 +44,11 @@ static JRFStoryStore *sharedInstance;
     return self.stories;
 }
 
-- (NSString *) baseUrl {
-    return @"http://hnapi.jackflintermann.com/entries/";
-}
-
 - (void) fetchStoriesWithCompletion:(void (^)(NSArray *, NSError *))completion {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [JRFEntrySerializer serializer];
-    [manager GET:[self baseUrl] parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *stories) {
+    NSString *path = @"http://news.ycombinator.com/";
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *stories) {
         self.stories = stories;
         [[TMDiskCache sharedCache] setObject:stories forKey:@"stories"];
         if (completion) {

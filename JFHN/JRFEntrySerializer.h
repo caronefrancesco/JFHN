@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 
-@interface JRFEntrySerializer : AFJSONResponseSerializer
+@interface JRFEntrySerializer : AFHTTPResponseSerializer
 
 @end
