@@ -11,8 +11,8 @@
 
 typedef NS_ENUM(NSInteger, JRFStoryType) {
     JRFStoryTypeNormal,
-    JRFStoryTypePoll,
-    JRFStoryTypeAsk
+    JRFStoryTypeHiring,
+    JRFStoryTypeHNPost,
 };
 
 @interface JRFStory : NSObject<NSCoding>

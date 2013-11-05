@@ -34,21 +34,36 @@
     CGSize maxTitleSize = CGSizeMake(self.storyTitleLabel.frame.size.width, CGFLOAT_MAX);
     CGFloat titleY = CGRectGetMinY(self.storyTitleLabel.frame);
     CGFloat titleHeight = [story.title boundingRectWithSize:maxTitleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: self.storyTitleLabel.font} context:nil].size.height;
-    CGFloat domainPadding = (CGRectGetMinY(self.storyDomainLabel.frame) - CGRectGetMaxY(self.storyTitleLabel.frame));
-    CGFloat bottomPadding = (CGRectGetHeight(self.frame) - CGRectGetMinY(self.storyDomainLabel.frame));
-    CGFloat height = titleY + titleHeight + domainPadding + bottomPadding + 5;
+    CGFloat domainPadding = 0, domainHeight = 0, bottomPadding = 5;
+    if (story.type == JRFStoryTypeNormal || story.type == JRFStoryTypeHNPost) {
+        domainPadding = (CGRectGetMinY(self.storyDomainLabel.frame) - CGRectGetMaxY(self.storyTitleLabel.frame));
+        domainHeight = CGRectGetHeight(self.storyDomainLabel.frame);
+    }
+    CGFloat height = titleY + titleHeight + domainPadding + domainHeight + bottomPadding;
     return height;
 }
 
 - (void) configureWithStory:(JRFStory *)story {
     self.storyTitleLabel.text = story.title;
-    self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@ · %@", (long)story.score, story.authorName, story.domain];
-    self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
     self.unreadLabel.hidden = story.isRead;
+    self.commentButton.hidden = NO;
+    self.commentNumberLabel.hidden = NO;
+    if (story.type == JRFStoryTypeNormal) {
+        self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@ · %@", (long)story.score, story.authorName, story.domain];
+        self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
+    }
+    else if (story.type == JRFStoryTypeHNPost) {
+        self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@", (long)story.score, story.authorName];
+        self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
+    }
+    else {
+        self.commentButton.hidden = YES;
+        self.commentNumberLabel.hidden = YES;
+    }
 }
 
 - (void) prepareForReuse {
-    self.storyDomainLabel.text = nil;
+    self.storyTitleLabel.text = nil;
     self.storyDomainLabel.text = nil;
 }
 

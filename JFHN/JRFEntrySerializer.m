@@ -24,6 +24,7 @@
     NSMutableArray *entries = [NSMutableArray array];
     for (NSInteger i = 0; i < baseTable.children.count - 2; i += 3) {
         JRFStory *story = [JRFStory new];
+        story.type = JRFStoryTypeNormal;
         NSArray *rows = [baseTable.children subarrayWithRange:NSMakeRange(i, 3)];
         TFHppleElement *linkChild = rows[0];
         TFHppleElement *link = [[linkChild searchWithXPathQuery:@"//td[@class='title']/a"] firstObject];
@@ -31,7 +32,13 @@
         NSString *title = link.text;
         TFHppleElement *domainElement = [[linkChild searchWithXPathQuery:@"//td[@class='title']/span"] firstObject];
         NSCharacterSet *parensAndWhitespace = [NSCharacterSet characterSetWithCharactersInString:@"( )"];
-        story.domain = [domainElement.text stringByTrimmingCharactersInSet:parensAndWhitespace];
+        NSString *domain = [domainElement.text stringByTrimmingCharactersInSet:parensAndWhitespace];
+        if (domain) {
+            story.domain = domain;
+        }
+        else {
+            story.type = JRFStoryTypeHNPost;
+        }
         story.title = title;
         story.url = [NSURL URLWithString:href];
         TFHppleElement *metadataChild = rows[1];
@@ -42,6 +49,21 @@
         story.authorName = authorElement.text;
         TFHppleElement *commentElement = [[metadataChild searchWithXPathQuery:@"//td/a"] lastObject];
         story.commentCount = [commentElement.text integerValue];
+        NSString *commentLink = commentElement.attributes[@"href"];
+        if (commentLink) {
+            NSURLComponents *components = [[NSURLComponents alloc] initWithString:commentLink];
+            NSArray *queryArgs = [components.query componentsSeparatedByString:@"&"];
+            for (NSString *query in queryArgs) {
+                NSArray *kv = [query componentsSeparatedByString:@"="];
+                if ([kv[0] isEqualToString:@"id"]) {
+                    story.storyId = kv[1];
+                }
+            }
+        }
+        else {
+            story.type = JRFStoryTypeHiring;
+            story.storyId = [NSString stringWithFormat:@"%@%@", story.title, story.url];
+        }
         [entries addObject:story];
     }
     return [NSArray arrayWithArray:entries];
