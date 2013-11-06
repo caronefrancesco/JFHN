@@ -80,6 +80,7 @@
 
 - (void) share:(id)sender {
     OSKShareableContent *content = [OSKShareableContent contentFromURL:self.story.url];
+    content.title = self.story.title;
     NSArray *excludedActivityTypes = @[OSKActivityType_API_AppDotNet, OSKActivityType_API_500Pixels, OSKActivityType_URLScheme_Instagram, OSKActivityType_URLScheme_1Password_Search, OSKActivityType_URLScheme_1Password_Browser, OSKActivityType_iOS_Facebook];
     [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content presentingViewController:self options:@{OSKActivityOption_ExcludedTypes: excludedActivityTypes}];
 }
