@@ -16,4 +16,7 @@
 + (UIFont *)secondaryAppFont;
 + (UIFont *)secondaryAppFontWithSize:(CGFloat)size;
 
++ (UIFont *)tertiaryAppFont;
++ (UIFont *)tertiaryAppFontWithSize:(CGFloat)size;
+
 @end

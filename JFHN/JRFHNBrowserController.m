@@ -9,6 +9,8 @@
 #import "JRFHNBrowserController.h"
 #import "JRFCommentViewController.h"
 #import "JRFWebViewController+Instapaper.h"
+#import "JRFStory.h"
+#import <OvershareKit/OvershareKit.h>
 
 @implementation JRFHNBrowserController
 
@@ -28,18 +30,29 @@
 - (void) viewDidLoad {
     self.view.tintColor = [UIColor appTintColor];
     [super viewDidLoad];
-    UIImage *image = [[UIImage imageNamed:@"842-chat-bubbles"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIImage *highlightedImage = [[UIImage imageNamed:@"842-chat-bubbles-selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    UIBarButtonItem *commentItem = [self barButtonItemForImageName:@"842-chat-bubbles" target:self selector:@selector(toggleComments:)];
+    
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    UIBarButtonItem *readabilityItem = [self barButtonItemForImageName:@"860-glasses" target:self selector:@selector(toggleInstapaper:)];
+    
+    UIBarButtonItem *shareItem = [self barButtonItemForImageName:@"702-share" target:self selector:@selector(share:)];
+    
+    self.toolbarItems = @[commentItem, flex, readabilityItem, flex, shareItem];
+    NSLog(@"");
+}
+
+- (UIBarButtonItem *) barButtonItemForImageName:(NSString *)imageName target:(id)target selector:(SEL)selector {
+    UIImage *image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *highlightedImage = [[UIImage imageNamed:[imageName stringByAppendingString:@"-selected"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     [button setImage:image forState:UIControlStateNormal];
     [button setImage:highlightedImage forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(toggleComments:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     button.tintColor = [UIColor appTintColor];
-    UIBarButtonItem *commentItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share:)];
-    self.toolbarItems = @[commentItem, flex, shareItem];
-    NSLog(@"");
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+    return item;
 }
 
 - (void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -61,8 +74,14 @@
     }
 }
 
-- (void) share:(id)sender {
+- (void) toggleInstapaper:(id)sender {
     [[self visibleWebViewController] toggleInstapaper];
+}
+
+- (void) share:(id)sender {
+    OSKShareableContent *content = [OSKShareableContent contentFromURL:self.story.url];
+    NSArray *excludedActivityTypes = @[OSKActivityType_API_AppDotNet, OSKActivityType_API_500Pixels, OSKActivityType_URLScheme_Instagram, OSKActivityType_URLScheme_1Password_Search, OSKActivityType_URLScheme_1Password_Browser, OSKActivityType_iOS_Facebook];
+    [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content presentingViewController:self options:@{OSKActivityOption_ExcludedTypes: excludedActivityTypes}];
 }
 
 @end

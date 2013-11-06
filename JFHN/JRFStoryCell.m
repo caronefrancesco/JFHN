@@ -8,12 +8,12 @@
 
 #import "JRFStoryCell.h"
 #import "JRFStory.h"
+#import "UIFont+HN.h"
 
 @interface JRFStoryCell()
 @property (weak, nonatomic) IBOutlet UILabel *storyTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storyDomainLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentNumberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *unreadLabel;
+@property (weak, nonatomic) IBOutlet UIView *unreadView;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @end
 
@@ -26,8 +26,7 @@
     [self.commentButton setImage:renderedContentImage forState:UIControlStateNormal];
     [self.commentButton setImage:renderedHighlightImage forState:UIControlStateHighlighted];
     self.commentButton.tintColor = [UIColor appTintColor];
-    self.commentNumberLabel.textColor = [UIColor appTintColor];
-    self.unreadLabel.textColor = [UIColor appTintColor];
+    self.unreadView.backgroundColor = [UIColor appTintColor];
 }
 
 - (CGFloat) heightForStory:(JRFStory *) story {
@@ -43,22 +42,33 @@
     return height;
 }
 
+- (NSMutableDictionary *) commentButtonAttributes {
+    return [@{
+             NSFontAttributeName: [UIFont tertiaryAppFont],
+             NSForegroundColorAttributeName: [UIColor appTintColor],
+             } mutableCopy];
+}
+
 - (void) configureWithStory:(JRFStory *)story {
+    NSString *text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
+    NSMutableDictionary *attributes = [self commentButtonAttributes];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    [self.commentButton setAttributedTitle:attributedText forState:UIControlStateNormal];
+    attributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    [self.commentButton setAttributedTitle:attributedText forState:UIControlStateHighlighted];
     self.storyTitleLabel.text = story.title;
-    self.unreadLabel.hidden = story.isRead;
+    self.unreadView.hidden = story.isRead;
     self.commentButton.hidden = NO;
-    self.commentNumberLabel.hidden = NO;
     if (story.type == JRFStoryTypeNormal) {
         self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@ · %@", (long)story.score, story.authorName, story.domain];
-        self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
+
     }
     else if (story.type == JRFStoryTypeHNPost) {
         self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@", (long)story.score, story.authorName];
-        self.commentNumberLabel.text = [NSString stringWithFormat:@"%li", (long)story.commentCount];
     }
     else {
         self.commentButton.hidden = YES;
-        self.commentNumberLabel.hidden = YES;
     }
 }
 
@@ -69,15 +79,36 @@
 
 - (void) layoutSubviews {
     [super layoutSubviews];
-    CGFloat height = self.frame.size.height;
+    
+    CGFloat buttonWidth = self.commentButton.frame.size.width;
+    CGFloat buttonHeight = self.commentButton.frame.size.height;
+    CGFloat imageWidth = self.commentButton.imageView.image.size.width;
     CGFloat imageHeight = self.commentButton.imageView.image.size.height;
-    CGRect numberFrame = self.commentNumberLabel.frame;
-    numberFrame.origin.y = height/2 + 3;
-    UIEdgeInsets insets = self.commentButton.imageEdgeInsets;
-    insets.top = height/2 - imageHeight + 6;
-    insets.bottom = height - insets.top - imageHeight;
-    self.commentButton.imageEdgeInsets = insets;
-    self.commentNumberLabel.frame = numberFrame;
+    CGFloat titleHeight = CGRectGetMaxY(self.storyTitleLabel.frame);
+    CGRect textRect = [@"123" boundingRectWithSize:CGSizeMake(imageWidth, imageHeight)
+                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                        attributes:[self commentButtonAttributes]
+                                           context:nil];
+    CGFloat textHeight = textRect.size.height;
+    CGFloat topPadding = (titleHeight - imageHeight) / 2 + 5;
+    CGFloat rightPadding = 10;
+    CGFloat titlePadding = 4;
+    
+    UIEdgeInsets imageEdgeInsets = UIEdgeInsetsZero;
+    UIEdgeInsets titleEdgeInsets = UIEdgeInsetsZero;
+    
+    imageEdgeInsets.right = rightPadding;
+    imageEdgeInsets.left = buttonWidth - imageWidth - imageEdgeInsets.right;
+    imageEdgeInsets.top = topPadding;
+    imageEdgeInsets.bottom = buttonHeight - imageHeight - imageEdgeInsets.top;
+    
+    titleEdgeInsets.left = imageEdgeInsets.left - buttonWidth + titlePadding;
+    titleEdgeInsets.top = topPadding + titlePadding;
+    titleEdgeInsets.bottom = buttonHeight - textHeight - titleEdgeInsets.top;
+    
+    self.commentButton.imageEdgeInsets = imageEdgeInsets;
+    self.commentButton.titleEdgeInsets = titleEdgeInsets;
+
 }
 
 - (IBAction)selectComments:(id)sender {

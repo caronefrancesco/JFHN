@@ -25,4 +25,12 @@
     return [UIFont fontWithName:@"AvenirNext-Regular" size:size];
 }
 
++ (UIFont *)tertiaryAppFont {
+    return [self secondaryAppFontWithSize:12];
+}
+
++ (UIFont *)tertiaryAppFontWithSize:(CGFloat)size {
+    return [UIFont fontWithName:@"AvenirNext-Regular" size:size];
+}
+
 @end
