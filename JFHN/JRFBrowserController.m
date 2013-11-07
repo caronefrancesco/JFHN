@@ -83,43 +83,6 @@
 }
 
 
-- (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    return self;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
-    return self;
-}
-
-- (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 1.0;
-}
-
-- (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-
-}
-
-
-- (void) pannedFromRight:(UIScreenEdgePanGestureRecognizer *)sender {
-    switch (sender.state) {
-        case UIGestureRecognizerStateBegan: {
-            UIViewController *testController = [UIViewController new];
-            testController.transitioningDelegate = self;
-            break;
-        }
-        case UIGestureRecognizerStateChanged:
-            break;
-        case UIGestureRecognizerStateEnded:
-            break;
-        case UIGestureRecognizerStateCancelled:
-            
-        default:
-            break;
-    }
-}
-
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (self.toolbarMode == JRFToolbarModeInteractive) {
         [self hideToolbarAnimated:YES];
@@ -161,9 +124,11 @@
     [self.navController setToolbarHidden:NO animated:animated];
 }
 
-- (void) navigationController:(JRFWebViewController *)fromController
+- (void) navigationController:(UINavigationController *)navController
        willShowViewController:(JRFWebViewController *)toController animated:(BOOL)animated {
-    self.navigationController.interactivePopGestureRecognizer.enabled = self.navController.viewControllers.count < 2;
+    BOOL onePageVisible = self.navController.viewControllers.count < 2;
+    self.navigationController.interactivePopGestureRecognizer.enabled = onePageVisible;
+    self.navController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -174,7 +139,50 @@
 }
 
 - (JRFWebViewController *)visibleWebViewController {
-    return [self.navController visibleViewController];
+    UIViewController *controller = [self.navController visibleViewController];
+    if ([controller isKindOfClass:[JRFWebViewController class]]) {
+        return (JRFWebViewController *)controller;
+    }
+    return nil;
 }
+
+//
+//- (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+//    return self;
+//}
+//
+//- (id<UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
+//    return self;
+//}
+//
+//- (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+//    return 1.0;
+//}
+//
+//- (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+//    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+//    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+//
+//}
+//
+//
+//- (void) pannedFromRight:(UIScreenEdgePanGestureRecognizer *)sender {
+//    switch (sender.state) {
+//        case UIGestureRecognizerStateBegan: {
+//            UIViewController *testController = [UIViewController new];
+//            testController.transitioningDelegate = self;
+//            break;
+//        }
+//        case UIGestureRecognizerStateChanged:
+//            break;
+//        case UIGestureRecognizerStateEnded:
+//            break;
+//        case UIGestureRecognizerStateCancelled:
+//
+//        default:
+//            break;
+//    }
+//}
+
 
 @end

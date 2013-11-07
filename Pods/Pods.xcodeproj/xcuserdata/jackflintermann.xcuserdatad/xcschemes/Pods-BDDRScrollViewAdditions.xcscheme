@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B71F6AA011B3413C9A9866C1"
+               BlueprintIdentifier = "26642ECCC11843EC85C53BFF"
                BuildableName = "libPods-BDDRScrollViewAdditions.a"
                BlueprintName = "Pods-BDDRScrollViewAdditions"
                ReferencedContainer = "container:Pods.xcodeproj">

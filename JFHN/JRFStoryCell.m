@@ -92,7 +92,7 @@
     CGFloat textHeight = textRect.size.height;
     CGFloat topPadding = (titleHeight - imageHeight) / 2 + 5;
     CGFloat rightPadding = 10;
-    CGFloat titlePadding = 4;
+    CGFloat titlePadding = 5;
     
     UIEdgeInsets imageEdgeInsets = UIEdgeInsetsZero;
     UIEdgeInsets titleEdgeInsets = UIEdgeInsetsZero;
@@ -103,7 +103,7 @@
     imageEdgeInsets.bottom = buttonHeight - imageHeight - imageEdgeInsets.top;
     
     titleEdgeInsets.left = imageEdgeInsets.left - buttonWidth + titlePadding;
-    titleEdgeInsets.top = topPadding + titlePadding;
+    titleEdgeInsets.top = topPadding + titlePadding - 1;
     titleEdgeInsets.bottom = buttonHeight - textHeight - titleEdgeInsets.top;
     
     self.commentButton.imageEdgeInsets = imageEdgeInsets;

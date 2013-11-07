@@ -10,7 +10,6 @@
 #import "JRFCommentViewController.h"
 #import "JRFWebViewController+Instapaper.h"
 #import "JRFStory.h"
-#import <OvershareKit/OvershareKit.h>
 
 @implementation JRFHNBrowserController
 
@@ -40,7 +39,7 @@
     UIBarButtonItem *shareItem = [self barButtonItemForImageName:@"702-share" target:self selector:@selector(share:)];
     
     self.toolbarItems = @[commentItem, flex, readabilityItem, flex, shareItem];
-    NSLog(@"");
+    self.navController.delegate = self;
 }
 
 - (UIBarButtonItem *) barButtonItemForImageName:(NSString *)imageName target:(id)target selector:(SEL)selector {
@@ -79,10 +78,53 @@
 }
 
 - (void) share:(id)sender {
+    [OSKPresentationManager sharedInstance].styleDelegate = self;
     OSKShareableContent *content = [OSKShareableContent contentFromURL:self.story.url];
     content.title = self.story.title;
     NSArray *excludedActivityTypes = @[OSKActivityType_API_AppDotNet, OSKActivityType_API_500Pixels, OSKActivityType_URLScheme_Instagram, OSKActivityType_URLScheme_1Password_Search, OSKActivityType_URLScheme_1Password_Browser, OSKActivityType_iOS_Facebook];
     [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content presentingViewController:self options:@{OSKActivityOption_ExcludedTypes: excludedActivityTypes}];
 }
 
+- (BOOL) osk_toolbarsUseUnjustifiablyBorderlessButtons {
+    return YES;
+}
+
+- (BOOL) respondsToSelector:(SEL)aSelector {
+    NSLog(@"%s", sel_getName(aSelector));
+    return [super respondsToSelector:aSelector];
+}
+
+#pragma mark - UINavigationControllerDelegate
+//- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+//    return self;
+//}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+//
+//- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+//    return 0.3f;
+//}
+//
+//- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+//    // Grab the from and to view controllers from the context
+//    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+//    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+//    fromViewController.view.alpha = 1.0f;
+//    toViewController.view.alpha = 0.0f;
+//    toViewController.view.frame = fromViewController.view.frame;
+//
+//    fromViewController.view.userInteractionEnabled = NO;
+//    
+//    [transitionContext.containerView addSubview:fromViewController.view];
+//    [transitionContext.containerView addSubview:toViewController.view];
+//    
+//    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+//        toViewController.view.alpha = 1.0f;
+//        fromViewController.view.alpha = 0.0f;
+//    } completion:^(BOOL finished) {
+//        [transitionContext completeTransition:YES];
+//    }];
+//}
+
 @end
+

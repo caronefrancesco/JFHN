@@ -7,9 +7,11 @@
 //
 
 #import "JRFBrowserController.h"
+#import <OvershareKit/OvershareKit.h>
+
 @class JRFStory;
 
-@interface JRFHNBrowserController : JRFBrowserController
+@interface JRFHNBrowserController : JRFBrowserController<OSKPresentationStyle, UINavigationControllerDelegate>
 @property(nonatomic)JRFStory *story;
 @property(nonatomic, readonly)BOOL commentsShown;
 - (void) showCommentsAnimated:(BOOL)animated;
