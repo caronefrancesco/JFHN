@@ -15,7 +15,7 @@ typedef NS_OPTIONS(NSInteger, JRFToolbarMode) {
     JRFToolbarModeVisible = 3
 };
 
-@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, JRFWebViewDelegate>
+@interface JRFBrowserController : UIViewController<UINavigationControllerDelegate, JRFWebViewDelegate, UIGestureRecognizerDelegate>
 - (id) initWithUrl:(NSURL *)url;
 @property(nonatomic, readwrite, weak) UIToolbar *toolbar;
 @property(nonatomic, weak) UINavigationController *navController;

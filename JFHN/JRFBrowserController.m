@@ -10,6 +10,10 @@
 #import "JRFURLRouter.h"
 #import "JRFWebViewController.h"
 
+@interface JRFBrowserController()
+@property(nonatomic, weak) UITapGestureRecognizer *scrollToTopGestureRecognizer;
+@end
+
 @implementation JRFBrowserController
 
 - (id) initWithUrl:(NSURL *)url {
@@ -56,12 +60,33 @@
     self.navigationItem.titleView = label;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleTapped:)];
+    gestureRecognizer.delegate = self;
+    self.scrollToTopGestureRecognizer = gestureRecognizer;
+    [self.navigationController.navigationBar addGestureRecognizer:gestureRecognizer];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar removeGestureRecognizer:self.scrollToTopGestureRecognizer];
+    self.scrollToTopGestureRecognizer = nil;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
+    CGPoint location = [touch locationInView:self.navigationItem.titleView];
+    return CGRectContainsPoint(self.navigationItem.titleView.frame, location);
+}
+
 - (void) titleTapped:(id)sender {
     if (self.navController.toolbarHidden) {
         [self showToolbarAnimated:YES];
     }
     else {
-        [self.visibleWebViewController.webView.scrollView setContentOffset:CGPointZero animated:YES];
+        UIScrollView *scrollView = self.visibleWebViewController.webView.scrollView;
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top) animated:YES];
     }
 }
 

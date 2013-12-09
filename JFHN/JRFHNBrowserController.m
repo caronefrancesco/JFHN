@@ -59,11 +59,6 @@
     viewController.toolbarItems = self.toolbarItems;
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"");
-}
-
 - (void) toggleComments:(id)sender {
     if (_commentsShown) {
         [self hideCommentsAnimated:YES];
@@ -87,11 +82,6 @@
 
 - (BOOL) osk_toolbarsUseUnjustifiablyBorderlessButtons {
     return YES;
-}
-
-- (BOOL) respondsToSelector:(SEL)aSelector {
-    NSLog(@"%s", sel_getName(aSelector));
-    return [super respondsToSelector:aSelector];
 }
 
 #pragma mark - UINavigationControllerDelegate
