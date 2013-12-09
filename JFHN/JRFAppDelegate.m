@@ -20,9 +20,12 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
     self.window.rootViewController = navController;
     self.window.tintColor = [UIColor appTintColor];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    style.alignment = NSTextAlignmentCenter;
     NSDictionary *attributes = @{
                                  NSForegroundColorAttributeName: [UIColor appTintColor],
                                  NSFontAttributeName: [UIFont primaryAppFont],
+                                 NSParagraphStyleAttributeName: style,
                                  };
     [[UINavigationBar appearance] setTitleTextAttributes:attributes];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];

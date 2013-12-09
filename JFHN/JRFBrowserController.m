@@ -35,20 +35,34 @@
     self.navController.view.tintColor = self.view.tintColor;
     UIScreenEdgePanGestureRecognizer *emptyBackGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedFromLeft:)];
     emptyBackGestureRecognizer.edges = UIRectEdgeLeft;
-    UIScreenEdgePanGestureRecognizer *screenEdgeGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedFromRight:)];
-    screenEdgeGestureRecognizer.edges = UIRectEdgeRight;
-    [self.navController.view addGestureRecognizer:screenEdgeGestureRecognizer];
+//    UIScreenEdgePanGestureRecognizer *screenEdgeGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedFromRight:)];
+//    screenEdgeGestureRecognizer.edges = UIRectEdgeRight;
+//    [self.navController.view addGestureRecognizer:screenEdgeGestureRecognizer];
     [self.navController.view addGestureRecognizer:emptyBackGestureRecognizer];
-    UILabel *label = [[UILabel alloc] initWithFrame:self.navigationController.navigationBar.frame];
-    label.backgroundColor = [UIColor clearColor];
-    label.numberOfLines = 2;
-    label.attributedText = [[NSAttributedString alloc] initWithString:self.navigationItem.title attributes:[[UINavigationBar appearance] titleTextAttributes]];
-    label.textAlignment = NSTextAlignmentCenter;
-    [label setAdjustsFontSizeToFitWidth:YES];
-    label.minimumScaleFactor = 0.5;
-    self.navigationItem.titleView = label;
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacerView];
+    CGRect rect = self.navigationController.navigationBar.bounds;
+    rect.size.width -= 100;
+    UILabel *label = [[UILabel alloc] initWithFrame:rect];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont primaryAppFont];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor appTintColor];
+    label.text = self.navigationItem.title;
+    label.numberOfLines = 3;
+    label.adjustsFontSizeToFitWidth = YES;
+    label.minimumScaleFactor = 0.5;
+    self.navigationItem.titleView = label;
+}
+
+- (void) titleTapped:(id)sender {
+    if (self.navController.toolbarHidden) {
+        [self showToolbarAnimated:YES];
+    }
+    else {
+        [self.visibleWebViewController.webView.scrollView setContentOffset:CGPointZero animated:YES];
+    }
 }
 
 - (void) pannedFromLeft:(UIScreenEdgePanGestureRecognizer *)sender {
@@ -134,7 +148,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-#warning TODO: drop the stack
+//#warning TODO: drop the stack
     // Dispose of any resources that can be recreated.
 }
 

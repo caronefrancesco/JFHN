@@ -10,7 +10,6 @@
 #import "JRFURLRouter.h"
 
 @interface JRFWebViewController()
-@property(nonatomic, readonly) UIWebView *webView;
 @property(nonatomic, weak) UIProgressView *progressView;
 @property(nonatomic) BOOL finishedLoading;
 @end
@@ -50,6 +49,13 @@
     
     self.finishedLoading = NO;
     _progressView.progress = 0.0f;
+}
+
+- (void) reload:(id)sender {
+    self.progressView.progress = 0;
+    [self.webView loadRequest:self.request];
+    CGFloat progress = MAX(self.progressView.progress, 0.05);
+    [self.progressView setProgress:progress animated:YES];
 }
 
 - (void) setDelegate:(id<JRFWebViewDelegate>)delegate {

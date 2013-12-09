@@ -33,14 +33,17 @@
         TFHppleElement *domainElement = [[linkChild searchWithXPathQuery:@"//td[@class='title']/span"] firstObject];
         NSCharacterSet *parensAndWhitespace = [NSCharacterSet characterSetWithCharactersInString:@"( )"];
         NSString *domain = [domainElement.text stringByTrimmingCharactersInSet:parensAndWhitespace];
+        story.title = title;
         if (domain) {
             story.domain = domain;
+            story.url = [NSURL URLWithString:href];
         }
         else {
             story.type = JRFStoryTypeHNPost;
+            story.domain = @"news.ycombinator.com";
+            href = [@"https://news.ycombinator.com/" stringByAppendingString:href];
+            story.url = [NSURL URLWithString:href];
         }
-        story.title = title;
-        story.url = [NSURL URLWithString:href];
         TFHppleElement *metadataChild = rows[1];
         TFHppleElement *pointsChild = [[metadataChild searchWithXPathQuery:@"//td/span"] firstObject];
         NSString *points = [pointsChild text];
@@ -50,6 +53,7 @@
         TFHppleElement *commentElement = [[metadataChild searchWithXPathQuery:@"//td/a"] lastObject];
         story.commentCount = [commentElement.text integerValue];
         NSString *commentLink = commentElement.attributes[@"href"];
+        // Don't add job links
         if (commentLink) {
             NSURLComponents *components = [[NSURLComponents alloc] initWithString:commentLink];
             NSArray *queryArgs = [components.query componentsSeparatedByString:@"&"];
@@ -59,12 +63,8 @@
                     story.storyId = kv[1];
                 }
             }
+            [entries addObject:story];
         }
-        else {
-            story.type = JRFStoryTypeHiring;
-            story.storyId = [NSString stringWithFormat:@"%@%@", story.title, story.url];
-        }
-        [entries addObject:story];
     }
     return [NSArray arrayWithArray:entries];
 }

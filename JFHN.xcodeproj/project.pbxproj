@@ -199,12 +199,12 @@
 				A046F26E180FCF4A004F0471 /* JRFCommentSerializer.h */,
 				A046F26F180FCF4A004F0471 /* JRFCommentSerializer.m */,
 				A04593821814D12600350BDD /* JRFWebViewDelegate.h */,
-				A045937F1814CD9A00350BDD /* JRFWebViewController.h */,
-				A04593801814CD9A00350BDD /* JRFWebViewController.m */,
 				A07EA38E18163F27005E6D5F /* JRFWebViewController+Instapaper.h */,
 				A07EA38F18163F27005E6D5F /* JRFWebViewController+Instapaper.m */,
 				A07EA391181640CA005E6D5F /* JRFInstapaperViewController.h */,
 				A07EA392181640CA005E6D5F /* JRFInstapaperViewController.m */,
+				A045937F1814CD9A00350BDD /* JRFWebViewController.h */,
+				A04593801814CD9A00350BDD /* JRFWebViewController.m */,
 				A0B441BB180B809200529C07 /* JRFBrowserController.h */,
 				A0B441BC180B809200529C07 /* JRFBrowserController.m */,
 				A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */,
@@ -549,7 +549,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFHN/JFHN-Prefix.pch";
 				INFOPLIST_FILE = "JFHN/JFHN-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -563,7 +565,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFHN/JFHN-Prefix.pch";
 				INFOPLIST_FILE = "JFHN/JFHN-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
