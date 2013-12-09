@@ -26,6 +26,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidUpdate:) name:JRFStoryStoreDidRefreshNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
     }
     return self;
 }
@@ -44,9 +45,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     sizingCell = [self.tableView dequeueReusableCellWithIdentifier:cellSizingReuseIdentifier];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.attributedTitle = [self refreshControlString];
-    CGFloat h, s, b;
-    [[UIColor appTintColor] getHue:&h saturation:&s brightness:&b alpha:nil];
-    refreshControl.tintColor = [UIColor colorWithHue:h saturation:s/2 brightness:b alpha:1.0];;
+    refreshControl.tintColor = [[UIColor appTintColor] adjustedColorForRefreshControl];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     self.title = @"Hacker News";
@@ -109,8 +108,15 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     [self.refreshControl endRefreshing];
 }
 
+- (void) orientationChanged:(NSNotification *)notification {
+    if (!self.isViewLoaded || !self.view.window) {
+        UIInterfaceOrientation orientation = [[notification.userInfo valueForKey:UIApplicationStatusBarOrientationUserInfoKey] integerValue];
+        [self willRotateToInterfaceOrientation:orientation duration:0];
+    }
+}
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                 duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     CGRect sizingFrame = sizingCell.frame;
     sizingFrame.size.width = self.tableView.frame.size.height;

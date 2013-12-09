@@ -12,4 +12,6 @@
 
 + (UIColor *)appTintColor;
 
+- (UIColor *) adjustedColorForRefreshControl;
+
 @end

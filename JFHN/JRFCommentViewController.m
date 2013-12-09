@@ -16,6 +16,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 
 @interface JRFCommentViewController () {
     JRFCommentCell *sizingCell;
+    BOOL refreshing;
 }
 @end
 
@@ -33,21 +34,46 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIView *commentView = [[UIToolbar alloc] init];
-    self.tableView.backgroundView = commentView;
     UINib *nib = [UINib nibWithNibName:kCommentCellReuseIdentifier bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:kCommentCellReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     sizingCell = [nib instantiateWithOwner:nil options:nil][0];
-    if (self.story) {
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [[UIColor appTintColor] adjustedColorForRefreshControl];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    [self fetchComments];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (refreshing) {
+        if (self.tableView.contentOffset.y == 0){
+            self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
+            [self.refreshControl beginRefreshing];
+        }
+    }
+}
+
+- (void) refresh:(UIRefreshControl *)sender {
+    [self fetchComments];
+}
+
+- (void) fetchComments {
+    if (self.story && !refreshing) {
+        refreshing = YES;
         [[JRFStoryStore sharedInstance] fetchCommentsForStory:self.story withCompletion:^(NSArray *comments, NSError *error) {
             if (error) {
+                refreshing = NO;
+                [self.refreshControl endRefreshing];
 #warning todo: error
             }
             else {
+                refreshing = NO;
                 self.story.comments = comments;
                 self.story.commentCount = comments.count;
                 [self.tableView reloadData];
+                [self.refreshControl endRefreshing];
             }
         }];
     }
