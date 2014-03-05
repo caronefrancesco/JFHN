@@ -9,7 +9,7 @@
 #import "JRFHNBrowserController.h"
 #import "JRFCommentViewController.h"
 #import "JRFWebViewController+Instapaper.h"
-#import "JRFStory.h"
+#import "JRFEntry.h"
 
 @implementation JRFHNBrowserController
 

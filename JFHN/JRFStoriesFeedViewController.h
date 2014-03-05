@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JRFStoryCell.h"
+#import "JRFEntryCell.h"
+#import <NTDCoreDataTableViewController/NTDCoreDataTableViewController.h>
 
-@interface JRFStoriesFeedViewController : UITableViewController<JRFStoryCellDelegate>
+@interface JRFStoriesFeedViewController : NTDCoreDataTableViewController<JRFEntryCellDelegate>
 
 @end

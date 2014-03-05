@@ -13,7 +13,6 @@
 		A0077AB9180D00ED003A5FFF /* JRFCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0077AB8180D00ED003A5FFF /* JRFCommentViewController.m */; };
 		A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */; };
 		A045937B1810FF7700350BDD /* JRFCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A045937A1810FF7700350BDD /* JRFCommentCell.xib */; };
-		A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = A045937D1811975E00350BDD /* JRFURLRouter.m */; };
 		A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04593801814CD9A00350BDD /* JRFWebViewController.m */; };
 		A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26C180FB7F9004F0471 /* NSDate+Utility.m */; };
 		A046F270180FCF4A004F0471 /* JRFCommentSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A046F26F180FCF4A004F0471 /* JRFCommentSerializer.m */; };
@@ -35,12 +34,14 @@
 		A0B441951808DB3F00529C07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B441741808DB3F00529C07 /* UIKit.framework */; };
 		A0B4419D1808DB3F00529C07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0B4419B1808DB3F00529C07 /* InfoPlist.strings */; };
 		A0B4419F1808DB3F00529C07 /* JFHNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B4419E1808DB3F00529C07 /* JFHNTests.m */; };
-		A0B441AA1808DF9A00529C07 /* JRFStoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441A91808DF9A00529C07 /* JRFStoryStore.m */; };
-		A0B441AD1808E09F00529C07 /* JRFStory.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441AC1808E09F00529C07 /* JRFStory.m */; };
-		A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441AF1808E81800529C07 /* JRFStoryCell.m */; };
-		A0B441B21808E82600529C07 /* JRFStoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B441B11808E82600529C07 /* JRFStoryCell.xib */; };
+		A0B441AA1808DF9A00529C07 /* JRFEntryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441A91808DF9A00529C07 /* JRFEntryStore.m */; };
+		A0B441AD1808E09F00529C07 /* JRFEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441AC1808E09F00529C07 /* JRFEntry.m */; };
+		A0B441B01808E81800529C07 /* JRFEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441AF1808E81800529C07 /* JRFEntryCell.m */; };
+		A0B441B21808E82600529C07 /* JRFEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B441B11808E82600529C07 /* JRFEntryCell.xib */; };
 		A0B441BA18092C3C00529C07 /* JRFEntrySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */; };
 		A0B441BD180B809200529C07 /* JRFBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B441BC180B809200529C07 /* JRFBrowserController.m */; };
+		A0CD64BC18C54F290031D4B8 /* JFHN.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0CD64BA18C54F290031D4B8 /* JFHN.xcdatamodeld */; };
+		A0CD64C718C64ABF0031D4B8 /* JRFFeatureExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CD64C618C64ABF0031D4B8 /* JRFFeatureExtractor.m */; };
 		A0F2732D181F6DDB005521D1 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F27329181F6DDB005521D1 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A0F2732E181F6DDB005521D1 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F2732B181F6DDB005521D1 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
@@ -65,8 +66,6 @@
 		A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFHNBrowserController.h; sourceTree = "<group>"; };
 		A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFHNBrowserController.m; sourceTree = "<group>"; };
 		A045937A1810FF7700350BDD /* JRFCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRFCommentCell.xib; sourceTree = "<group>"; };
-		A045937C1811975E00350BDD /* JRFURLRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFURLRouter.h; sourceTree = "<group>"; };
-		A045937D1811975E00350BDD /* JRFURLRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFURLRouter.m; sourceTree = "<group>"; };
 		A045937F1814CD9A00350BDD /* JRFWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFWebViewController.h; sourceTree = "<group>"; };
 		A04593801814CD9A00350BDD /* JRFWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFWebViewController.m; sourceTree = "<group>"; };
 		A04593821814D12600350BDD /* JRFWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JRFWebViewDelegate.h; sourceTree = "<group>"; };
@@ -102,17 +101,20 @@
 		A0B4419A1808DB3F00529C07 /* JFHNTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JFHNTests-Info.plist"; sourceTree = "<group>"; };
 		A0B4419C1808DB3F00529C07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0B4419E1808DB3F00529C07 /* JFHNTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFHNTests.m; sourceTree = "<group>"; };
-		A0B441A81808DF9A00529C07 /* JRFStoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFStoryStore.h; sourceTree = "<group>"; };
-		A0B441A91808DF9A00529C07 /* JRFStoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFStoryStore.m; sourceTree = "<group>"; };
-		A0B441AB1808E09F00529C07 /* JRFStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFStory.h; sourceTree = "<group>"; };
-		A0B441AC1808E09F00529C07 /* JRFStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFStory.m; sourceTree = "<group>"; };
-		A0B441AE1808E81800529C07 /* JRFStoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFStoryCell.h; sourceTree = "<group>"; };
-		A0B441AF1808E81800529C07 /* JRFStoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFStoryCell.m; sourceTree = "<group>"; };
-		A0B441B11808E82600529C07 /* JRFStoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRFStoryCell.xib; sourceTree = "<group>"; };
+		A0B441A81808DF9A00529C07 /* JRFEntryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntryStore.h; sourceTree = "<group>"; };
+		A0B441A91808DF9A00529C07 /* JRFEntryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntryStore.m; sourceTree = "<group>"; };
+		A0B441AB1808E09F00529C07 /* JRFEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntry.h; sourceTree = "<group>"; };
+		A0B441AC1808E09F00529C07 /* JRFEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntry.m; sourceTree = "<group>"; };
+		A0B441AE1808E81800529C07 /* JRFEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntryCell.h; sourceTree = "<group>"; };
+		A0B441AF1808E81800529C07 /* JRFEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntryCell.m; sourceTree = "<group>"; };
+		A0B441B11808E82600529C07 /* JRFEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRFEntryCell.xib; sourceTree = "<group>"; };
 		A0B441B818092C3C00529C07 /* JRFEntrySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFEntrySerializer.h; sourceTree = "<group>"; };
 		A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFEntrySerializer.m; sourceTree = "<group>"; };
 		A0B441BB180B809200529C07 /* JRFBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFBrowserController.h; sourceTree = "<group>"; };
 		A0B441BC180B809200529C07 /* JRFBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFBrowserController.m; sourceTree = "<group>"; };
+		A0CD64BB18C54F290031D4B8 /* JFHN.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JFHN.xcdatamodel; sourceTree = "<group>"; };
+		A0CD64C518C64ABF0031D4B8 /* JRFFeatureExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFFeatureExtractor.h; sourceTree = "<group>"; };
+		A0CD64C618C64ABF0031D4B8 /* JRFFeatureExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFFeatureExtractor.m; sourceTree = "<group>"; };
 		A0F27329181F6DDB005521D1 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		A0F2732A181F6DDB005521D1 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		A0F2732B181F6DDB005521D1 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
@@ -185,15 +187,17 @@
 				A0B441801808DB3F00529C07 /* JRFAppDelegate.m */,
 				A0B441851808DB3F00529C07 /* JRFStoriesFeedViewController.h */,
 				A0B441861808DB3F00529C07 /* JRFStoriesFeedViewController.m */,
-				A0B441A81808DF9A00529C07 /* JRFStoryStore.h */,
-				A0B441A91808DF9A00529C07 /* JRFStoryStore.m */,
-				A0B441AB1808E09F00529C07 /* JRFStory.h */,
-				A0B441AC1808E09F00529C07 /* JRFStory.m */,
+				A0B441A81808DF9A00529C07 /* JRFEntryStore.h */,
+				A0B441A91808DF9A00529C07 /* JRFEntryStore.m */,
+				A0B441AB1808E09F00529C07 /* JRFEntry.h */,
+				A0B441AC1808E09F00529C07 /* JRFEntry.m */,
 				A046F271180FCFA5004F0471 /* JRFComment.h */,
 				A046F272180FCFA5004F0471 /* JRFComment.m */,
-				A0B441AE1808E81800529C07 /* JRFStoryCell.h */,
-				A0B441AF1808E81800529C07 /* JRFStoryCell.m */,
-				A0B441B11808E82600529C07 /* JRFStoryCell.xib */,
+				A0B441AE1808E81800529C07 /* JRFEntryCell.h */,
+				A0B441AF1808E81800529C07 /* JRFEntryCell.m */,
+				A0B441B11808E82600529C07 /* JRFEntryCell.xib */,
+				A0CD64C518C64ABF0031D4B8 /* JRFFeatureExtractor.h */,
+				A0CD64C618C64ABF0031D4B8 /* JRFFeatureExtractor.m */,
 				A0B441B818092C3C00529C07 /* JRFEntrySerializer.h */,
 				A0B441B918092C3C00529C07 /* JRFEntrySerializer.m */,
 				A046F26E180FCF4A004F0471 /* JRFCommentSerializer.h */,
@@ -209,8 +213,6 @@
 				A0B441BC180B809200529C07 /* JRFBrowserController.m */,
 				A00CE5B4180BEB7D003F91AC /* JRFHNBrowserController.h */,
 				A00CE5B5180BEB7D003F91AC /* JRFHNBrowserController.m */,
-				A045937C1811975E00350BDD /* JRFURLRouter.h */,
-				A045937D1811975E00350BDD /* JRFURLRouter.m */,
 				A0077AB7180D00ED003A5FFF /* JRFCommentViewController.h */,
 				A0077AB8180D00ED003A5FFF /* JRFCommentViewController.m */,
 				A046F27B180FE221004F0471 /* JRFCommentCell.h */,
@@ -230,6 +232,7 @@
 				A0F2732C181F6DDB005521D1 /* GTMNSString+HTML.h */,
 				A0B4418B1808DB3F00529C07 /* Images.xcassets */,
 				A0B441771808DB3F00529C07 /* Supporting Files */,
+				A0CD64BA18C54F290031D4B8 /* JFHN.xcdatamodeld */,
 			);
 			path = JFHN;
 			sourceTree = "<group>";
@@ -321,7 +324,7 @@
 						};
 					};
 					A0B441901808DB3F00529C07 = {
-						TestTargetID = A0B4416C1808DB3F00529C07;
+						TestTargetID = A0B4416C1808DB3F00529C07 /* JFHN */;
 					};
 				};
 			};
@@ -351,7 +354,7 @@
 			files = (
 				A045937B1810FF7700350BDD /* JRFCommentCell.xib in Resources */,
 				A0B4418C1808DB3F00529C07 /* Images.xcassets in Resources */,
-				A0B441B21808E82600529C07 /* JRFStoryCell.xib in Resources */,
+				A0B441B21808E82600529C07 /* JRFEntryCell.xib in Resources */,
 				A0B4417B1808DB3F00529C07 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,21 +408,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				A046F270180FCF4A004F0471 /* JRFCommentSerializer.m in Sources */,
-				A045937E1811975E00350BDD /* JRFURLRouter.m in Sources */,
-				A0B441AD1808E09F00529C07 /* JRFStory.m in Sources */,
+				A0B441AD1808E09F00529C07 /* JRFEntry.m in Sources */,
+				A0CD64C718C64ABF0031D4B8 /* JRFFeatureExtractor.m in Sources */,
 				A046F26D180FB7F9004F0471 /* NSDate+Utility.m in Sources */,
 				A0077AB9180D00ED003A5FFF /* JRFCommentViewController.m in Sources */,
 				A0B4417D1808DB3F00529C07 /* main.m in Sources */,
 				A046F276180FD01D004F0471 /* NSDictionary+NilSafe.m in Sources */,
 				A07EA39018163F27005E6D5F /* JRFWebViewController+Instapaper.m in Sources */,
-				A0B441AA1808DF9A00529C07 /* JRFStoryStore.m in Sources */,
+				A0B441AA1808DF9A00529C07 /* JRFEntryStore.m in Sources */,
 				A046F27D180FE221004F0471 /* JRFCommentCell.m in Sources */,
 				A04593811814CD9A00350BDD /* JRFWebViewController.m in Sources */,
 				A0077AB0180CDF75003A5FFF /* UIColor+HN.m in Sources */,
 				A0077AB3180CDFBB003A5FFF /* UIFont+HN.m in Sources */,
 				A07EA393181640CA005E6D5F /* JRFInstapaperViewController.m in Sources */,
 				A0F2732D181F6DDB005521D1 /* NSString+HTML.m in Sources */,
-				A0B441B01808E81800529C07 /* JRFStoryCell.m in Sources */,
+				A0B441B01808E81800529C07 /* JRFEntryCell.m in Sources */,
 				A00CE5B6180BEB7D003F91AC /* JRFHNBrowserController.m in Sources */,
 				A0B441BA18092C3C00529C07 /* JRFEntrySerializer.m in Sources */,
 				A046F273180FCFA5004F0471 /* JRFComment.m in Sources */,
@@ -427,6 +430,7 @@
 				A0B441BD180B809200529C07 /* JRFBrowserController.m in Sources */,
 				A0B441811808DB3F00529C07 /* JRFAppDelegate.m in Sources */,
 				A0F2732E181F6DDB005521D1 /* GTMNSString+HTML.m in Sources */,
+				A0CD64BC18C54F290031D4B8 /* JFHN.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,6 +649,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A0CD64BA18C54F290031D4B8 /* JFHN.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A0CD64BB18C54F290031D4B8 /* JFHN.xcdatamodel */,
+			);
+			currentVersion = A0CD64BB18C54F290031D4B8 /* JFHN.xcdatamodel */;
+			path = JFHN.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A0B441651808DB3F00529C07 /* Project object */;
 }

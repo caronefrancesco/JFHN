@@ -8,32 +8,22 @@
 
 #import "JRFStoriesFeedViewController.h"
 #import "JRFHNBrowserController.h"
-#import "JRFStoryStore.h"
-#import "JRFStory.h"
+#import "JRFEntryStore.h"
+#import "JRFEntry.h"
 #import "NSDate+Utility.h"
+#import <MagicalRecord/NSManagedObjectContext+MagicalRecord.h>
+#import <CoreData/CoreData.h>
 
-static NSString *cellReuseIdentifier = @"JRFStoryCell";
+static NSString *cellReuseIdentifier = @"JRFEntryCell";
 static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 
 @interface JRFStoriesFeedViewController() {
-    JRFStoryCell *sizingCell;
+    JRFEntryCell *sizingCell;
+    __weak UIView *statusBarBackground;
 }
 @end
 
 @implementation JRFStoriesFeedViewController
-
-- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidUpdate:) name:JRFStoryStoreDidRefreshNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
-    }
-    return self;
-}
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (void)viewDidLoad
 {
@@ -50,6 +40,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     self.refreshControl = refreshControl;
     self.title = @"Hacker News";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [[self fetchedResultsController] performFetch:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -57,6 +48,11 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     // hack to fix a uirefreshcontrol layout bug
     [self.refreshControl beginRefreshing];
     [self.refreshControl endRefreshing];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    statusBarBackground = view;
+    statusBarBackground.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.9];
+    [self.navigationController.view addSubview:statusBarBackground];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -71,13 +67,20 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     });
 }
 
-- (void) storeDidUpdate:(NSNotification *)notification {
-    [self updateTableAndRefreshControl];
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [statusBarBackground removeFromSuperview];
+    statusBarBackground = nil;
 }
 
 - (void) refresh:(id)sender {
     [self.refreshControl beginRefreshing];
-    [[JRFStoryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
+    [[JRFEntryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
         if (error) {
             [self.refreshControl endRefreshing];
         }
@@ -88,7 +91,7 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 }
 
 - (NSAttributedString *) refreshControlString {
-    NSDate *lastUpdated = [[JRFStoryStore sharedInstance] lastFetchDate];
+    NSDate *lastUpdated = [[JRFEntryStore sharedInstance] lastFetchDate];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSString *lastUpdatedString = @"Never";
     if (lastUpdated) {
@@ -104,60 +107,36 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
 
 - (void) updateTableAndRefreshControl {
     self.refreshControl.attributedTitle = [self refreshControlString];
-    [self.tableView reloadData];
     [self.refreshControl endRefreshing];
-}
-
-- (void) orientationChanged:(NSNotification *)notification {
-    if (!self.isViewLoaded || !self.view.window) {
-        UIInterfaceOrientation orientation = [[notification.userInfo valueForKey:UIApplicationStatusBarOrientationUserInfoKey] integerValue];
-        [self willRotateToInterfaceOrientation:orientation duration:0];
-    }
-}
-
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                 duration:(NSTimeInterval)duration {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    CGRect sizingFrame = sizingCell.frame;
-    sizingFrame.size.width = self.tableView.frame.size.height;
-    sizingCell.frame = sizingFrame;
-    [sizingCell layoutSubviews];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table View
 
+- (JRFEntry *) entryAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [[[self fetchedResultsController] fetchedObjects] objectAtIndex:indexPath.row];
+    return [MTLManagedObjectAdapter modelOfClass:[JRFEntry class] fromManagedObject:object error:nil];
+}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JRFStory *story = [[[JRFStoryStore sharedInstance] allStories] objectAtIndex:indexPath.row];
-    return [sizingCell heightForStory:story];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [[[JRFStoryStore sharedInstance] allStories] count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    JRFStoryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier
-                                                            forIndexPath:indexPath];
-    cell.delegate = self;
-    JRFStory *story = [[[JRFStoryStore sharedInstance] allStories] objectAtIndex:indexPath.row];
-    [cell configureWithStory:story];
-    return cell;
+    JRFEntry *entry = [self entryAtIndexPath:indexPath];
+    sizingCell.frame = ({
+        CGRect rect = sizingCell.frame;
+        rect.size.width = self.view.frame.size.width;
+        rect;
+    });
+    return [sizingCell heightForEntry:entry];
 }
 
 #pragma mark - Story cell delegate
 
 - (void)presentStoryAtIndexPath:(NSIndexPath *)indexPath withComments:(BOOL)comments {
-    JRFStory *story = [[[JRFStoryStore sharedInstance] allStories] objectAtIndex:indexPath.row];
-    JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:story.url];
+    JRFEntry *entry = [self entryAtIndexPath:indexPath];
+    JRFHNBrowserController *browser = [[JRFHNBrowserController alloc] initWithUrl:entry.url];
     browser.toolbarMode = JRFToolbarModeInteractive;
-    browser.navigationItem.title = story.title;
-    browser.story = story;
-    if (!story.isRead) {
-        story.read = YES;
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    browser.navigationItem.title = entry.title;
+    browser.story = entry;
+    if (!entry.readAt) {
+        [[JRFEntryStore sharedInstance] markEntryAsRead:entry];
     }
     if (comments) {
         [browser showCommentsAnimated:NO];
@@ -169,9 +148,34 @@ static NSString *cellSizingReuseIdentifier = @"JRFStorySizingCell";
     [self presentStoryAtIndexPath:indexPath withComments:NO];
 }
 
-- (void) storyCellDidSelectComments:(JRFStoryCell *)cell {
+- (void)entryCellDidSelectComments:(JRFEntryCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     [self presentStoryAtIndexPath:indexPath withComments:YES];
+}
+
+- (void)entryCellDidPerformHideGesture:(JRFEntryCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    JRFEntry *entry = [self entryAtIndexPath:indexPath];
+    [[JRFEntryStore sharedInstance] markEntryAsUninteresting:entry];
+}
+
+- (NSFetchedResultsController *)newFetchedResultsController {
+    NSFetchRequest *fetchRequest = [[JRFEntryStore sharedInstance] frontpageStoryFetchRequest];
+    NSManagedObjectContext *ctx = [NSManagedObjectContext MR_rootSavingContext];
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:ctx sectionNameKeyPath:nil cacheName:nil];
+    frc.delegate = self;
+    return frc;
+}
+
+- (NSString *)cellIdentifier {
+    return cellReuseIdentifier;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    JRFEntry *entry = [self entryAtIndexPath:indexPath];
+    JRFEntryCell *entryCell = (JRFEntryCell *)cell;
+    entryCell.delegate = self;
+    [entryCell configureWithEntry:entry];
 }
 
 @end

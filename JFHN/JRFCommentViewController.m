@@ -7,8 +7,8 @@
 //
 
 #import "JRFCommentViewController.h"
-#import "JRFStoryStore.h"
-#import "JRFStory.h"
+#import "JRFEntryStore.h"
+#import "JRFEntry.h"
 #import "JRFComment.h"
 #import "JRFCommentCell.h"
 
@@ -17,6 +17,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 @interface JRFCommentViewController () {
     JRFCommentCell *sizingCell;
     BOOL refreshing;
+    NSMutableDictionary *cachedSizes;
 }
 @end
 
@@ -26,7 +27,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        cachedSizes = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -38,6 +39,10 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     [self.tableView registerNib:nib forCellReuseIdentifier:kCommentCellReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     sizingCell = [nib instantiateWithOwner:nil options:nil][0];
+    CGRect frame = sizingCell.frame;
+    frame.size.width = self.tableView.frame.size.width;
+    sizingCell.frame = frame;
+    [sizingCell setNeedsLayout];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [[UIColor appTintColor] adjustedColorForRefreshControl];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -62,7 +67,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 - (void) fetchComments {
     if (self.story && !refreshing) {
         refreshing = YES;
-        [[JRFStoryStore sharedInstance] fetchCommentsForStory:self.story withCompletion:^(NSArray *comments, NSError *error) {
+        [[JRFEntryStore sharedInstance] fetchCommentsForStory:self.story withCompletion:^(NSArray *comments, NSError *error) {
             if (error) {
                 refreshing = NO;
                 [self.refreshControl endRefreshing];
@@ -72,8 +77,12 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
                 refreshing = NO;
                 self.story.comments = comments;
                 self.story.commentCount = comments.count;
+                [cachedSizes removeAllObjects];
                 [self.tableView reloadData];
                 [self.refreshControl endRefreshing];
+#warning testing
+                CGFloat avgHeight = self.tableView.contentSize.height / [self.tableView numberOfRowsInSection:0];
+                NSLog(@"average height is %f", avgHeight);
             }
         }];
     }
@@ -85,25 +94,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    CGRect sizingFrame = sizingCell.frame;
-    sizingFrame.size.width = self.tableView.frame.size.height;
-    sizingCell.frame = sizingFrame;
-    [sizingCell layoutSubviews];
-}
-
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.tableView reloadData];
-}
-
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -124,11 +115,30 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSNumber *cache = [cachedSizes objectForKey:indexPath];
+    if (cache) {
+        return [cache floatValue];
+    }
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
     NSInteger indentation = [self tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
     sizingCell.indentationLevel = indentation;
+    sizingCell.frame = ({
+        CGRect rect = sizingCell.frame;
+        rect.size.width = self.view.frame.size.width;
+        rect;
+    });
     [sizingCell configureWithComment:comment];
-    return [sizingCell intrinsicContentSize].height;
+    CGFloat height = [sizingCell intrinsicContentSize].height;
+    [cachedSizes setObject:@(height) forKey:indexPath];
+    return height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSNumber *cache = [cachedSizes objectForKey:indexPath];
+    if (cache) {
+        return [cache floatValue];
+    }
+    return 267.0f;
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView {

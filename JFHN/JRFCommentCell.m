@@ -57,6 +57,16 @@
     return CGSizeMake(width, height);
 }
 
+- (void) layoutSubviews {
+    [super layoutSubviews];
+    self.commentLabel.frame = ({
+        CGRect rect = self.commentLabel.frame;
+        rect.size.height = CGRectGetHeight(self.frame) - CGRectGetMinY(rect) - 5;
+        rect.size.width = CGRectGetWidth(self.frame) - CGRectGetMinX(rect) - 5;
+        rect;
+    });
+}
+
 - (void) configureWithComment:(JRFComment *)comment {
     self.authorLabel.text = comment.authorName;
     self.commentLabel.attributedText = [[NSAttributedString alloc] initWithString:comment.text attributes:[self attributesForComment]];

@@ -7,7 +7,6 @@
 //
 
 #import "JRFWebViewController.h"
-#import "JRFURLRouter.h"
 
 @interface JRFWebViewController()
 @property(nonatomic, weak) UIProgressView *progressView;
@@ -87,11 +86,6 @@
 - (BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (navigationType != UIWebViewNavigationTypeLinkClicked) {
         return YES;
-    }
-    
-    if ([[JRFURLRouter sharedInstance] canRouteUrl:request.URL]) {
-        [[JRFURLRouter sharedInstance] routeUrl:request.URL];
-        return NO;
     }
     
     [self.delegate webViewController:self didBlockLoadingRequest:request];

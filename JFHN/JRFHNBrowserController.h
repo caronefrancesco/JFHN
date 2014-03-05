@@ -9,10 +9,10 @@
 #import "JRFBrowserController.h"
 #import <OvershareKit/OvershareKit.h>
 
-@class JRFStory;
+@class JRFEntry;
 
 @interface JRFHNBrowserController : JRFBrowserController<OSKPresentationStyle, UINavigationControllerDelegate>
-@property(nonatomic)JRFStory *story;
+@property(nonatomic) JRFEntry *story;
 @property(nonatomic, readonly)BOOL commentsShown;
 - (void) showCommentsAnimated:(BOOL)animated;
 - (void) hideCommentsAnimated:(BOOL)animated;

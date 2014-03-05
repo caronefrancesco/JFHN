@@ -8,16 +8,19 @@
 
 #import "JRFAppDelegate.h"
 #import "JRFStoriesFeedViewController.h"
-#import "JRFStoryStore.h"
+#import "JRFEntryStore.h"
+#import "MagicalRecord+Setup.h"
 
 @implementation JRFAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [MagicalRecord setupCoreDataStack];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     JRFStoriesFeedViewController *controller = [[JRFStoriesFeedViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    navController.navigationBarHidden = YES;
     self.window.rootViewController = navController;
     self.window.tintColor = [UIColor appTintColor];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
@@ -61,7 +64,7 @@
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [[JRFStoryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
+    [[JRFEntryStore sharedInstance] fetchStoriesWithCompletion:^(NSArray *stories, NSError *error) {
         if (error) {
             completionHandler(UIBackgroundFetchResultFailed);
         }

@@ -7,7 +7,7 @@
 //
 
 #import "JRFCommentSerializer.h"
-#import "JRFStory.h"
+#import "JRFEntry.h"
 #import "JRFComment.h"
 #import <hpple/TFHpple.h>
 #import "NSString+HTML.h"

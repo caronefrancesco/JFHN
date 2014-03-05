@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Entry" syncable="YES">
+        <attribute name="authorName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commentCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="frontpagePosition" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="interestingProbability" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="markedAsUninterestingAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="readAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="storyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="submittedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uninterestingProbability" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Entry" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

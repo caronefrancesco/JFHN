@@ -7,7 +7,6 @@
 //
 
 #import "JRFBrowserController.h"
-#import "JRFURLRouter.h"
 #import "JRFWebViewController.h"
 
 @interface JRFBrowserController()

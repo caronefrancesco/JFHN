@@ -7,10 +7,10 @@
 //
 
 #import "JRFEntrySerializer.h"
-#import "JRFStory.h"
-#import "JRFStoryStore.h"
+#import "JRFEntry.h"
+#import "JRFEntryStore.h"
 #import <hpple/TFHpple.h>
-#import "NSString+HTML.h"
+#import <Mantle/Mantle.h>
 
 @implementation JRFEntrySerializer
 
@@ -23,8 +23,8 @@
     TFHppleElement *baseTable = [baseTables objectAtIndex:1];
     NSMutableArray *entries = [NSMutableArray array];
     for (NSInteger i = 0; i < baseTable.children.count - 2; i += 3) {
-        JRFStory *story = [JRFStory new];
-        story.type = JRFStoryTypeNormal;
+        JRFEntry *story = [JRFEntry new];
+        story.type = JRFEntryTypeNormal;
         NSArray *rows = [baseTable.children subarrayWithRange:NSMakeRange(i, 3)];
         TFHppleElement *linkChild = rows[0];
         TFHppleElement *link = [[linkChild searchWithXPathQuery:@"//td[@class='title']/a"] firstObject];
@@ -36,13 +36,13 @@
         story.title = title;
         if (domain) {
             story.domain = domain;
-            story.url = [NSURL URLWithString:href];
+            story.urlString = href;
         }
         else {
-            story.type = JRFStoryTypeHNPost;
+            story.type = JRFEntryTypeHNPost;
             story.domain = @"news.ycombinator.com";
             href = [@"https://news.ycombinator.com/" stringByAppendingString:href];
-            story.url = [NSURL URLWithString:href];
+            story.urlString = href;
         }
         TFHppleElement *metadataChild = rows[1];
         TFHppleElement *pointsChild = [[metadataChild searchWithXPathQuery:@"//td/span"] firstObject];
