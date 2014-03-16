@@ -11,7 +11,7 @@
 
 #define rightPadding 10
 
-@interface JRFCommentCell()
+@interface JRFCommentCell()<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UITextView *commentLabel;
 @end
@@ -23,6 +23,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.commentLabel.textContainer.lineFragmentPadding = 0;
     self.commentLabel.textContainerInset = UIEdgeInsetsZero;
+    self.commentLabel.delegate = self;
 }
 
 - (CGFloat) xForLabels {
@@ -74,6 +75,11 @@
 
 - (NSDictionary *)attributesForComment {
     return @{NSFontAttributeName: [UIFont secondaryAppFontWithSize:16], NSForegroundColorAttributeName: [UIColor blackColor]};
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    [self.delegate commentCellDidSelectURL:URL];
+    return NO;
 }
 
 @end

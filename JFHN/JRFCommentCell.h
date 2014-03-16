@@ -10,6 +10,11 @@
 
 @class JRFComment;
 
+@protocol JRFCommentCellDelegate
+- (void)commentCellDidSelectURL:(NSURL *)url;
+@end
+
 @interface JRFCommentCell : UITableViewCell
+@property(weak, nonatomic) id<JRFCommentCellDelegate> delegate;
 - (void) configureWithComment:(JRFComment *)comment;
 @end

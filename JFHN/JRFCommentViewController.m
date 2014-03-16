@@ -14,7 +14,7 @@
 
 static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
 
-@interface JRFCommentViewController () {
+@interface JRFCommentViewController()<JRFCommentCellDelegate> {
     JRFCommentCell *sizingCell;
     BOOL refreshing;
     NSMutableDictionary *cachedSizes;
@@ -106,6 +106,7 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     JRFComment *comment = [self.story commentAtIndex:indexPath.row];
     JRFCommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellReuseIdentifier forIndexPath:indexPath];
     [cell configureWithComment:comment];
+    cell.delegate = self;
     return cell;
 }
 
@@ -145,6 +146,10 @@ static NSString *kCommentCellReuseIdentifier = @"JRFCommentCell";
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
         [self.scrollViewDelegate scrollViewDidScroll:scrollView];
     }
+}
+
+- (void) commentCellDidSelectURL:(NSURL *)url {
+    [self.urlDelegate controllerDidBlockLoadingRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end

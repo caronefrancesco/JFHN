@@ -20,7 +20,7 @@
 
 @implementation JRFEntryCell
 
-- (void) awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     UIImage *renderedContentImage = [[self.commentButton imageForState:UIControlStateNormal] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImage *renderedHighlightImage = [[self.commentButton imageForState:UIControlStateHighlighted] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -28,18 +28,6 @@
     [self.commentButton setImage:renderedHighlightImage forState:UIControlStateHighlighted];
     self.commentButton.tintColor = [UIColor appTintColor];
     self.unreadView.backgroundColor = [UIColor appTintColor];
-    UILabel *label = [[UILabel alloc] init];
-    label.numberOfLines = 0;
-    label.font = [UIFont primaryAppFont];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.text = @"Not\nInterested";
-    CGSize size = [label intrinsicContentSize];
-    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, size.width, size.height);
-    __weak JRFEntryCell *weakself = self;
-    [self setSwipeGestureWithView:label color:[UIColor redColor] mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        [weakself.delegate entryCellDidPerformHideGesture:weakself];
-    }];
 }
 
 - (CGFloat)heightForEntry:(JRFEntry *)entry {
@@ -72,7 +60,7 @@
     attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
     [self.commentButton setAttributedTitle:attributedText forState:UIControlStateHighlighted];
     self.storyTitleLabel.text = entry.title;
-    self.unreadView.hidden = entry.readAt;
+    self.unreadView.hidden = (entry.readAt != nil);
     self.commentButton.hidden = NO;
     if (entry.type == JRFEntryTypeNormal) {
         self.storyDomainLabel.text = [NSString stringWithFormat:@"%li pts · %@ · %@", (long) entry.score, entry.authorName, entry.domain];
@@ -84,7 +72,20 @@
     else {
         self.commentButton.hidden = YES;
     }
-    self.storyInterestingLabel.text = [@(entry.interestingProbability) stringValue];
+    self.storyInterestingLabel.text = [[self numberFormatter] stringFromNumber:@(entry.interestingProbability)];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.numberOfLines = 0;
+    label.font = [UIFont primaryAppFont];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Not\nInterested";
+    CGSize size = [label intrinsicContentSize];
+    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, size.width, size.height);
+    __weak JRFEntryCell *weakself = self;
+    [self setSwipeGestureWithView:label color:[UIColor redColor] mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        [weakself.delegate entryCellDidPerformHideGesture:weakself];
+    }];
 }
 
 - (void) prepareForReuse {
@@ -134,6 +135,16 @@
 
 - (IBAction)selectComments:(id)sender {
     [self.delegate entryCellDidSelectComments:self];
+}
+
+- (NSNumberFormatter *) numberFormatter {
+    static NSNumberFormatter *numberFormatter;
+    if (!numberFormatter) {
+        numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        [numberFormatter setMaximumSignificantDigits:2];
+    }
+    return numberFormatter;
 }
 
 @end

@@ -97,7 +97,7 @@
 }
 
 - (NSString *) typeFeature {
-    return [NSString stringWithFormat:@"type_%li", self.entry.type];
+    return [NSString stringWithFormat:@"type_%i", self.entry.type];
 }
 
 - (NSString *)normalizedTitle {

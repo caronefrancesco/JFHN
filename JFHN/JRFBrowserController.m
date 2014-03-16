@@ -114,7 +114,7 @@
     }
 }
 
-- (void) webViewController:(JRFWebViewController *)controller didBlockLoadingRequest:(NSURLRequest *)request {
+- (void) controllerDidBlockLoadingRequest:(NSURLRequest *)request {
     JRFWebViewController *webViewController = [[JRFWebViewController alloc] initWithUrlRequest:request];
     webViewController.delegate = self;
     [self.navController pushViewController:webViewController animated:NO];

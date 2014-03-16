@@ -11,6 +11,5 @@
 @class JRFWebViewController;
 
 @protocol JRFWebViewDelegate<UIScrollViewDelegate>
-- (void) webViewController:(JRFWebViewController *)controller
-    didBlockLoadingRequest:(NSURLRequest *)request;
+- (void) controllerDidBlockLoadingRequest:(NSURLRequest *)request;
 @end

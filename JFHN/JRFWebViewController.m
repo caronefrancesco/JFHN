@@ -88,7 +88,7 @@
         return YES;
     }
     
-    [self.delegate webViewController:self didBlockLoadingRequest:request];
+    [self.delegate controllerDidBlockLoadingRequest:request];
     return NO;
 }
 
@@ -106,7 +106,8 @@
                 self.progressView.alpha = 1.0f;
             }];
         }
-        self.progressView.progress = adjustedProgress;
+        [self.progressView setProgress:adjustedProgress animated:YES];
+
         if (progress > 0.99f) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.progressView.alpha = 0.0f;
