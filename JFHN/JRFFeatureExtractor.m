@@ -53,7 +53,6 @@
     [features addObjectsFromArray:[self bigramFeatures]];
     [features addObject:[self domainFeature]];
     [features addObject:[self usernameFeature]];
-    [features addObject:[self dollarAmountFeature]];
     [features addObject:[self typeFeature]];
     return [NSSet setWithSet:features];
 }

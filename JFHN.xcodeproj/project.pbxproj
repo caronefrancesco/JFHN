@@ -325,7 +325,7 @@
 						};
 					};
 					A0B441901808DB3F00529C07 = {
-						TestTargetID = A0B4416C1808DB3F00529C07;
+						TestTargetID = A0B4416C1808DB3F00529C07 /* JFHN */;
 					};
 				};
 			};
