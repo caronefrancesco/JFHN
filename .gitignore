@@ -1,0 +1,5 @@
+.idea
+.DS_Store
+JFHN.xcworkspace/xcuserdata/
+Pods/
+Pods/Pods.xcodeproj/xcuserdata/
